@@ -20,7 +20,7 @@ Your app is ready to be deployed!
 
 ### Important
 Add ``.env`` file to \frontend
-``REACT_APP_SOCKET_ADDR=http://localhost:3003`` the port should be the same as backend socket.io port
+``REACT_APP_SOCKET_ADDR=http://localhost:3005`` the port should be the same as backend socket.io port
 
 ## Backend
 
