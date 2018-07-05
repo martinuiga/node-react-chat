@@ -1,0 +1,30 @@
+{
+	"name": "node-socket-backend",
+	"version": "0.0.1",
+	"description": "Socket backend project",
+	"main": "server.js",
+	"scripts": {
+		"start": "nodemon server.js",
+		"deploy": "npm install --production && node server.js --production"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Alvar195/node-socket-backend.git"
+	},
+	"author": "boyswithideas",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Alvar195/node-socket-backend/issues"
+	},
+	"homepage": "https://github.com/Alvar195/node-socket-backend#readme",
+	"dependencies": {
+		"body-parser": "^1.18.3",
+		"dotenv": "^6.0.0",
+		"express": "^4.16.3",
+		"lodash": "^4.17.10",
+		"socket.io": "^2.1.1"
+	},
+	"devDependencies": {
+		"nodemon": "^1.17.5"
+	}
+}

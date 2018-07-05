@@ -1,22 +1,41 @@
 import React, { Component } from 'react';
-import logo from './resources/images/logo.svg';
-import './App.css';
+import { connect } from "react-redux";
 
+import Layout from './containers/Layout/Layout'
+import Header from "./containers/Header/Header";
+import { sendResponse } from './store/actions/sendResponse';
+import Example from "./containers/Example/Example";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Chat</h1>
-        </header>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<Layout>
+				<Header connection={this.props.connection}/>
+				<Example
+					message={this.props.message}
+					response={this.props.sendResponse}
+				/>
+			</Layout>
+		);
+	}
 }
 
-export default App;
+const mapStateToProps = (state) => {
+	return {
+		connection: state.socket.connection,
+		message: state.socket.message
+	};
+};
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		sendResponse: (message) => {
+			dispatch(sendResponse(message))
+		},
+	}
+};
 
-
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App);
