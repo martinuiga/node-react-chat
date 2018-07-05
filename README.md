@@ -36,8 +36,6 @@ Stop:``docker stop couch``
 
 Rerun: ``docker start couch``
 
-Web interface: ``localhost:8082``
-
 ---
 
 Show running containers: ``docker ps`` all: ``docker ps -a``
