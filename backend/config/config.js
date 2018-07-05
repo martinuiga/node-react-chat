@@ -4,6 +4,7 @@ const config = {
 	},
 	couchdb: {
 		host: process.env.COUCHDB_HOST || 'localhost',
+		port: process.env.COUCHDB_PORT || '5984',
 	}
 };
 module.exports = config;

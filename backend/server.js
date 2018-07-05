@@ -5,6 +5,8 @@ const port = config.app.port;
 const server = require('http').createServer().listen(port);
 const socketIO = require("socket.io");
 const io = socketIO(server); // The default uws was bugged
+const nano = require('nano')(`http://${config.couchdb.host}:${config.couchdb.port}`);
+// https://www.npmjs.com/package/nano#getting-started
 
 const SocketIoController = require('./src/controllers/SocketIoController');
 

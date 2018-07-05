@@ -10,8 +10,7 @@ const Example = (props) => {
 			<TextField
 				id="returnMessage"
 				label="returnMessage"
-				onChange={(e) => {
-					console.log(e);
+				onBlur={(e) => {
 					props.response(e.target.value);
 				}}
 				margin="normal"

@@ -28,6 +28,24 @@ Add ``.env`` file to \frontend
 
 ``npm install``
 
+### Docker
+
+First run: ``docker run -p 5984:5984 --name couch -d couchdb``
+
+Stop:``docker stop couch``
+
+Rerun: ``docker start couch``
+
+Web interface: ``localhost:8082``
+
+---
+
+Show running containers: ``docker ps`` all: ``docker ps -a``
+
+Show installed images: ``docker images``
+
+Remove container: ``docker rm couch`` image: ``docker rmi couchdb``
+
 ### Run
 
 * Dev: ``npm start``
