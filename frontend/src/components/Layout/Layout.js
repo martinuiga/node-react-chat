@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './LayoutStyles';
 import Header from '../Header/Header';
 import ChatArea from '../ChatArea/ChatArea';
+import SideMenu from '../SideMenu/SideMenu';
 
 const Layout = (props) => {
 	const { classes } = props;
@@ -21,8 +22,7 @@ const Layout = (props) => {
 					spacing={16}>
 					<Grid item
 						xs={3}>
-						{/* Placeholder */}
-						<Paper className={classes.paper}>SideMenu</Paper>
+						<SideMenu/>
 					</Grid>
 					<Grid item
 						xs={9}>

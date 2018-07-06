@@ -13,22 +13,38 @@ const ChatArea = (props) => {
 
 	return (
 		<Grid container
+			className={classes.test}
 			alignItems='stretch'
+			justify='space-between'
+			wrap='nowrap'
+			direction='column'
 			spacing={8}>
 			<Grid item
-				xs={12}>
+				xs={'auto'}>
 				<Header
 					users={props.users}
 					room={props.room} />
 			</Grid>
 			<Grid item
-				xs={12}>
+				xs={'auto'}>
 				<Paper
 					className={classes.messageArea}>
-					<Messages />
-					<Footer
-						users={props.users} />
+					<Grid container
+						direction='column'
+						justify='flex-end'
+						className={classes.test}>
+						<Messages />
+						<Footer
+							users={props.users} />
+					</Grid>
 				</Paper>
+			</Grid>
+			{/* Placeholder */}
+			<Grid item
+				xs={'auto'}>
+				<Header
+					users={props.users}
+					room={props.room} />
 			</Grid>
 		</Grid>
 

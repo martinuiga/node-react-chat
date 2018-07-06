@@ -6,7 +6,7 @@ import Message from './Message/Message';
 const Messages = (props) => {
 	return (
 		<Grid item container
-			direction='column'
+			direction='column-reverse'
 			spacing={16}
 			xs={12}>
 			{/* Hardcoded placeholder */}

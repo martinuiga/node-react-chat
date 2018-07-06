@@ -3,6 +3,10 @@ const styles = theme => ({
 		...theme.mixins.gutters(),
 		paddingTop: theme.spacing.unit,
 		paddingBottom: theme.spacing.unit,
+		height: '79vh'
+	},
+	test: {
+		height: '100%'
 	}
 });
 
