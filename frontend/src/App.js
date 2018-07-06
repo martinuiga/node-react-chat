@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import logo from './resources/images/logo.svg';
 import './App.css';
 import Chatfooter from './containers/chat-footer/chat-footer';
