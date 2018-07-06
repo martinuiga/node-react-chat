@@ -1,5 +1,4 @@
-import { EXAMPLE_FROM_SERVER } from "../../constants/constants";
-import { CONN_STATUS } from "../actions/actionTypes";
+import { CONN_STATUS, EXAMPLE_FROM_SERVER } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
