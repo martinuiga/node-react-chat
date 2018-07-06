@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import io from 'socket.io-client';
 import createSocketIoMiddleware from 'redux-socket.io';
-import { CONN_STATUS } from "../constants/constants";
+import { CONN_STATUS } from "../store/actions/actionTypes";
 
 import socketReducer from './reducers/socket';
 

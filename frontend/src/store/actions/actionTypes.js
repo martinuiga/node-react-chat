@@ -1,1 +1,1 @@
-export const SET_NAME = 'SET_NAME';
+export const CONN_STATUS = 'CONN_STATUS';

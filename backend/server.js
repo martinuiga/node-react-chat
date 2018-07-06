@@ -9,12 +9,10 @@ const nano = require('nano')(`http://${config.couchdb.host}:${config.couchdb.por
 // https://www.npmjs.com/package/nano#getting-started
 
 const SocketIoController = require('./src/controllers/SocketIoController');
-
-let socketController = new SocketIoController('asd');
+let socketController;
 
 io.on('connection', (socket) => {
 	socketController = new SocketIoController(socket);
 	socketController.handleEvents();
 });
-
 console.log(`Server started on port ${port}`);

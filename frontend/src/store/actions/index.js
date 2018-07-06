@@ -1,3 +1,3 @@
 export {
-	setName
-} from './example'
+	sendResponse
+} from './sendResponse';

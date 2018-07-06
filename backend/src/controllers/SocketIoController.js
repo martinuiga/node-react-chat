@@ -1,5 +1,6 @@
 const config = require('../../config/config.js');
 const _ = require('lodash');
+const socketActions = require('../../constants/socketActions');
 
 class SocketIoController {
 	constructor(socket) {
@@ -11,9 +12,9 @@ class SocketIoController {
 		this.socket.on('action', (action) => {
 			console.log(action.type);
 			switch (action.type) {
-				case 'server/initialize':
+				case socketActions.INITIALIZE:
 					return this.actionInitialize(action);
-				case 'server/send-to-server-example':
+				case socketActions.SEND_TO_SERVER_EXAMPLE:
 					return this.actionExample(action);
 			}
 		});

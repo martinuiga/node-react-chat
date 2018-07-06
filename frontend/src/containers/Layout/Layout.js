@@ -1,4 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from "react-redux";
+
+import { sendResponse } from "../../store/actions/index";
+import Example from "../Example/Example";
+import Header from "../Header/Header";
 
 class Layout extends Component {
 	render() {
@@ -7,9 +12,32 @@ class Layout extends Component {
 				<main style={{marginTop: "100px"}}>
 					{this.props.children}
 				</main>
+				<Header connection={this.props.connection}/>
+				<Example
+					message={this.props.message}
+					response={this.props.sendResponse}
+				/>
 			</Fragment>
 		)
 	}
 }
 
-export default Layout;
+const mapStateToProps = (state) => {
+	return {
+		connection: state.socket.connection,
+		message: state.socket.message
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		sendResponse: (message) => {
+			dispatch(sendResponse(message))
+		},
+	}
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Layout);

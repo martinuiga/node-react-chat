@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
 import red from "@material-ui/core/colors/red";
 import green from "@material-ui/core/colors/green";
 import Connected from '@material-ui/icons/SignalWifi4Bar';
@@ -28,13 +27,4 @@ class Header extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		connection: state.socket.connection
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	null
-)(Header);
+export default Header;
