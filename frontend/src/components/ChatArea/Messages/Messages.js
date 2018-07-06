@@ -1,45 +1,22 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid'
 
-const styles = theme => ({
-    root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit,
-    },
-});
+import Message from './Message/Message';
 
 const Messages = (props) => {
-    const { classes } = props;
+	return (
+		<Grid item container
+			direction='column'
+			spacing={16}
+			xs={12}>
+			{/* Hardcoded placeholder */}
+			<Message message="Cool stuff 1" justify='flex-end' color='primary' />
+			<Message message="Cool stuff 2" justify='flex-start' />
+			<Message message="Cool stuff 3" justify='flex-end' color='primary' />
+			<Message message="Cool stuff 4" justify='flex-start' />
+		</Grid>
+	);
 
-    return (
-        <Grid container direction='column' spacing={16} alignItems='center'>
-            <Grid item container alignItems='flex-end'>
-                <Paper className={classes.root}>
-                    <Typography component="p">A cool message</Typography>
-                </Paper>
-            </Grid>
-            <Grid item>
-                <Paper className={classes.root}>
-                    <Typography component="p">A cool message</Typography>
-                </Paper>
-            </Grid>
-            <Grid item>
-                <Paper className={classes.root}>
-                    <Typography component="p">A cool message</Typography>
-                </Paper>
-            </Grid>
-            <Grid item>
-                <Paper className={classes.root}>
-                    <Typography component="p">A cool message</Typography>
-                </Paper>
-            </Grid>
-        </Grid>
-    );
-    
 };
 
-export default withStyles(styles)(Messages);
+export default Messages;

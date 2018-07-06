@@ -7,9 +7,9 @@ import registerServiceWorker from './registerServiceWorker';
 
 
 const app = (
-    <Provider >
-        <App/>
-    </Provider>
+	<Provider >
+		<App />
+	</Provider>
 );
 
 
