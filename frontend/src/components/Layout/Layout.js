@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './LayoutStyles';

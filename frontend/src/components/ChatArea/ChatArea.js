@@ -7,6 +7,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Messages from './Messages/Messages';
 import styles from './ChatAreaStyles';
+import Chatfooter from '../../containers/chat-footer/chat-footer';
 
 const ChatArea = (props) => {
 	const { classes } = props;
@@ -28,7 +29,7 @@ const ChatArea = (props) => {
 			<Grid item
 				xs={'auto'}>
 				<Paper
-					className={classes.messageArea}>
+					className={[classes.messageArea,classes.paper].join(" ")}>
 					<Grid container
 						direction='column'
 						justify='flex-end'
@@ -42,9 +43,9 @@ const ChatArea = (props) => {
 			{/* Placeholder */}
 			<Grid item
 				xs={'auto'}>
-				<Header
-					users={props.users}
-					room={props.room} />
+				<Paper className={classes.paper}>
+					<Chatfooter />
+				</Paper>
 			</Grid>
 		</Grid>
 
