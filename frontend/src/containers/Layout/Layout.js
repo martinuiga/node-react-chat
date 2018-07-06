@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { sendResponse } from "../../store/actions/index";
 import Example from "../Example/Example";
 import Header from "../Header/Header";
+import Chatfooter from "../chat-footer/chat-footer";
 
 class Layout extends Component {
 	render() {
@@ -17,6 +18,7 @@ class Layout extends Component {
 					message={this.props.message}
 					response={this.props.sendResponse}
 				/>
+				<Chatfooter/>
 			</Fragment>
 		)
 	}
