@@ -16,7 +16,6 @@ const Messages = (props) => {
 			<Message message="Cool stuff 4" justify='flex-start' />
 		</Grid>
 	);
-
 };
 
 export default Messages;

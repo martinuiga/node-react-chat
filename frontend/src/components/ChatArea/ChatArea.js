@@ -48,7 +48,6 @@ const ChatArea = (props) => {
 				</Paper>
 			</Grid>
 		</Grid>
-
 	);
 };
 

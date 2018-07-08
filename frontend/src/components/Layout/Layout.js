@@ -33,7 +33,6 @@ const Layout = (props) => {
 			</div>
 		</Fragment>
 	);
-
 };
 
 export default withStyles(styles)(Layout);

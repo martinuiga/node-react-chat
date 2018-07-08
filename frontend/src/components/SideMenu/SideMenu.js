@@ -21,8 +21,6 @@ const SideMenu = (props) => {
 				<MenuItem>Menu Item 2</MenuItem>
 			</Drawer>
 		</Paper>
-
-
 	);
 };
 
