@@ -9,9 +9,7 @@ import Header from '../../components/Header/Header';
 import ChatArea from '../../components/ChatArea/ChatArea';
 import Modal from '../../components/Modal/Modal';
 import { initialize, setNickname } from "../../store/actions/index";
-import Paper from "@material-ui/core/es/Paper/Paper";
-import Drawer from "@material-ui/core/es/Drawer/Drawer";
-import SideMenuItems from "../../components/SideMenu/SideMenuItems";
+import SideMenu from "../../components/SideMenu/SideMenu";
 
 class Layout extends Component {
 	state = {
@@ -56,28 +54,23 @@ class Layout extends Component {
 
 		if (this.props.nickname !== "" && !this.state.modalOpen) {
 			content = (
-				<Grid container
-					  spacing={16}>
-					<Grid item
-						  xs={3}>
-						<Paper>
-							<Drawer
-								variant="permanent"
-								classes={{
-									paper: classes.drawerPaper,
-								}}
-							>
-								<SideMenuItems
-									chatRooms={this.props.chatRooms}
-								/>
-							</Drawer>
-						</Paper>
+				<Grid
+					container
+					spacing={16}>
+					<Grid
+						item
+						xs={3}>
+						<SideMenu
+							chatRooms={this.props.chatRooms}
+						/>
 					</Grid>
-					<Grid item
-						  xs={9}>
+					<Grid
+						item
+						xs={9}>
 						<ChatArea
 							users={placeHolderNames}
-							room={placeHolderRoom} />
+							room={placeHolderRoom}
+						/>
 					</Grid>
 				</Grid>
 			)

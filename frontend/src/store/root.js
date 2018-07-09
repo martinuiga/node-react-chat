@@ -5,7 +5,6 @@ import { CONN_STATUS } from "../store/actions/actionTypes";
 
 import socketReducer from './reducers/socket';
 import userReducer from './reducers/user';
-import connect from "react-redux/es/connect/connect";
 
 let socket = io(process.env.REACT_APP_SOCKET_ADDR);
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");

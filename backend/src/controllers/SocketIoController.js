@@ -25,9 +25,9 @@ class SocketIoController {
 
 	actionInitialize() {
 		this.socket.emit('action', {
-			type: 'INITIALIZE',
+			type: 'INITIALIZE_ROOMS',
 			data: {
-				chatRooms: util.chatRooms, // temporarily hardcoded
+				chatRooms: util.chatRooms,
 				chatLog: util.chatLog
 			}
 		})
