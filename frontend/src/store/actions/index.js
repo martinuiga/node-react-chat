@@ -6,3 +6,7 @@ export {
 export {
 	setNickname
 } from './user';
+
+export {
+	sendMessage
+} from './chat';
