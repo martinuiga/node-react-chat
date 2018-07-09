@@ -21,7 +21,7 @@ const store = createStore(
 store.subscribe(() => {
 	console.log('new client state', store.getState());
 });
-// Initialize should fetch all starting data including menu, settings etc
+// Initialize should fetch all starting data from server
 store.dispatch({
 	type: 'server/initialize',
 });

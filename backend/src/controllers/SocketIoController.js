@@ -1,6 +1,7 @@
-const config = require('../../config/config.js');
+const config = require('../config/config.js');
 const _ = require('lodash');
-const socketActions = require('../../constants/socketActions');
+const socketActions = require('../constants/socketActions');
+const util = require('../util/util');
 
 class SocketIoController {
 	constructor(socket) {
@@ -9,13 +10,12 @@ class SocketIoController {
 
 	handleEvents() {
 		console.log('a user connected');
+		this.actionInitialize();
 		this.socket.on('action', (action) => {
 			console.log(action.type);
 			switch (action.type) {
-				case socketActions.INITIALIZE:
-					return this.actionInitialize(action);
-				case socketActions.SEND_TO_SERVER_EXAMPLE:
-					return this.actionExample(action);
+				case socketActions.MESSAGE:
+					return this.actionMessage(action);
 			}
 		});
 		this.socket.on('disconnect', () => {
@@ -23,17 +23,22 @@ class SocketIoController {
 		});
 	}
 
-	actionInitialize(action) {
-		setTimeout(() => {
-			this.socket.emit('action', {
-				type: 'EXAMPLE_FROM_SERVER',
-				data: {message: 'Message from server 5 seconds after connection!'}
-			})
-		}, 5000);
+	actionInitialize() {
+		this.socket.emit('action', {
+			type: 'INITIALIZE',
+			data: {
+				chatRooms: util.chatRooms, // temporarily hardcoded
+				chatLog: util.chatLog
+			}
+		})
 	}
 
-	actionExample(action) {
-		console.log(action);
+	actionMessage(action) {
+
+	}
+
+	actionJoinRoom(action) {
+
 	}
 }
 

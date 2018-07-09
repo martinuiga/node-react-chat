@@ -1,5 +1,5 @@
 require('dotenv').config();
-const config = require('./config/config');
+const config = require('./src/config/config');
 const _ = require('lodash');
 const port = config.app.port;
 const server = require('http').createServer().listen(port);
