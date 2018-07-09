@@ -7,7 +7,7 @@ const userInitialState = {
 
 const setNickname = (state, action) => {
     return updateObject(state, {
-        nickname: action.nickname
+        nickname: action.data.nickname
     });
 };
 

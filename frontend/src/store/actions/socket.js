@@ -3,7 +3,9 @@ import { INITIALIZE, SEND_TO_SERVER_EXAMPLE } from "./actionTypes";
 export const initialize = (nickname) => {
     return {
         type: INITIALIZE,
-        nickname: nickname
+        data: {
+            nickname
+        }
     }
 };
 
