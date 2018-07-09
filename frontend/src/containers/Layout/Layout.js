@@ -7,9 +7,11 @@ import { compose } from 'redux';
 import { styles } from './LayoutStyles';
 import Header from '../../components/Header/Header';
 import ChatArea from '../../components/ChatArea/ChatArea';
-import SideMenu from '../../components/SideMenu/SideMenu';
 import Modal from '../../components/Modal/Modal';
 import { initialize, setNickname } from "../../store/actions/index";
+import Paper from "@material-ui/core/es/Paper/Paper";
+import Drawer from "@material-ui/core/es/Drawer/Drawer";
+import SideMenuItems from "../../components/SideMenu/SideMenuItems";
 
 class Layout extends Component {
 	state = {
@@ -55,13 +57,24 @@ class Layout extends Component {
 		if (this.props.nickname !== "" && !this.state.modalOpen) {
 			content = (
 				<Grid container
-					spacing={16}>
+					  spacing={16}>
 					<Grid item
-						xs={3}>
-						<SideMenu />
+						  xs={3}>
+						<Paper>
+							<Drawer
+								variant="permanent"
+								classes={{
+									paper: classes.drawerPaper,
+								}}
+							>
+								<SideMenuItems
+									chatRooms={this.props.chatRooms}
+								/>
+							</Drawer>
+						</Paper>
 					</Grid>
 					<Grid item
-						xs={9}>
+						  xs={9}>
 						<ChatArea
 							users={placeHolderNames}
 							room={placeHolderRoom} />
@@ -93,7 +106,8 @@ const mapStateToProps = (state) => {
 	return {
 		// connection: state.socket.connection,
 		// message: state.socket.message,
-		nickname: state.user.nickname
+		nickname: state.user.nickname,
+		chatRooms: state.socket.chatRooms
 	};
 };
 
