@@ -6,7 +6,7 @@ const styles = theme => ({
 	},
 	messageArea: {
 		height: '79vh',
-		overflowY: 'scroll'
+		overflowY: 'scroll',
 	},
 	test: {
 		//height: '100%'

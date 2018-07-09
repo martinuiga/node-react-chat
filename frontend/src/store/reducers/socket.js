@@ -18,7 +18,7 @@ const setMessage = (state, action) => {
 	});
 };
 
-export default function (state = initialState, action) {
+export default (state = initialState, action) => {
 	switch (action.type) {
 		case CONN_STATUS:
 			return setConnection(state, action);
