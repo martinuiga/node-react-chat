@@ -5,10 +5,11 @@ const styles = theme => ({
 		paddingBottom: theme.spacing.unit,
 	},
 	messageArea: {
-		height: '79vh'
+		height: '79vh',
+		overflowY: 'scroll',
 	},
 	test: {
-		height: '100%'
+		//height: '100%'
 	}
 });
 

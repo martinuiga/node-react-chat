@@ -1,30 +1,34 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import io from 'socket.io-client';
 import createSocketIoMiddleware from 'redux-socket.io';
 import { CONN_STATUS } from "../store/actions/actionTypes";
 
 import socketReducer from './reducers/socket';
+import userReducer from './reducers/user';
 
 let socket = io(process.env.REACT_APP_SOCKET_ADDR);
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 const rootReducer = combineReducers({
-	socket: socketReducer
+	socket: socketReducer,
+	user: userReducer
 });
+
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const store = createStore(
 	rootReducer,
-	applyMiddleware(socketIoMiddleware)
+	composeEnhancers(applyMiddleware(socketIoMiddleware))
 );
 
 // listens to stuff sent from server
 store.subscribe(() => {
 	console.log('new client state', store.getState());
 });
-// Initialize should fetch all starting data from server
-store.dispatch({
-	type: 'server/initialize',
-});
+// Initialize should fetch all starting data including menu, settings etc
+// store.dispatch({
+// 	type: 'server/initialize',
+// });
 socket.on('connect', () => {
 	if (store.getState().socket.connection !== 1) {
 		store.dispatch({
