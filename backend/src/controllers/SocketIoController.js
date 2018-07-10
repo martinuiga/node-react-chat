@@ -15,11 +15,11 @@ class SocketIoController {
 
 	handleEvents() {
 		console.log('a user connected');
-		this.actionInitialize();
-		console.log(this.socket);
 		this.socket.on('action', (action) => {
 			console.log(action.type);
 			switch (action.type) {
+				case socketActions.INITIALIZE:
+					return this.actionInitialize(action);
 				case socketActions.MESSAGE:
 					return this.actionMessage(action);
 				case socketActions.JOIN_GROUP:
@@ -37,7 +37,7 @@ class SocketIoController {
 		this.socket.emit('action', {
 			type: 'INITIALIZE_ROOMS',
 			data: {
-				chatRooms: util.chatRooms,
+				chatRooms: this.chatRooms,
 				chatLog: util.chatLog
 			}
 		})
@@ -48,12 +48,13 @@ class SocketIoController {
 	}
 
 	actionJoinRoom(action) {
+		console.log(action);
 		const groupId = action.data.groupId;
 
-		if (!groupId) return null; // TODO return error to client
+		if (groupId === undefined || groupId === null) return null; // TODO return error to client
 
 		//not sure if this is a good idea to rewrite like that
-		const userChatRooms = ChatRoomController.joinGroup(this.chatRooms, groupId);
+		const userChatRooms = ChatRoomController.joinRoom(this.chatRooms, groupId);
 
 	}
 }

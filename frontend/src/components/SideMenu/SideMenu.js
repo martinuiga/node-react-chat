@@ -14,7 +14,7 @@ const SideMenu = (props) => {
 	if (chatRooms.length) roomsList =
 		<RoomsList
 			chatRooms={chatRooms}
-			joinGroup={props.joinGroup}
+			joinGroup={props.joinRoom}
 		/>;
 
 	return (

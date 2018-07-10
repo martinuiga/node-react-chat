@@ -41,7 +41,7 @@ class RoomsList extends Component {
 	};
 
 	handleGroupJoin = (id) => {
-		this.props.joinGroup(id);
+		this.props.joinRoom(id);
 	};
 
 	userList(connectedUsers) {

@@ -63,7 +63,7 @@ class Layout extends Component {
 						xs={3}>
 						<SideMenu
 							chatRooms={this.props.chatRooms}
-							joinGroup={this.props.joinGroup}
+							joinGroup={this.props.joinRoom}
 						/>
 					</Grid>
 					<Grid

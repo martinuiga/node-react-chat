@@ -13,7 +13,7 @@ const SocketIoController = require('./src/controllers/SocketIoController');
 const util = require('./src/util/util');
 
 let socketController;
-let chatRooms = util.chatRoomsInit;
+let chatRooms = util.chatRooms;
 let chatLog;
 let userCounter = 0;
 
