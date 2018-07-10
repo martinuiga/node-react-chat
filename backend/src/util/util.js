@@ -26,6 +26,21 @@ const chatRooms = [
 	}
 ];
 
+const chatRoomsInit = [
+	{
+		id: 0,
+		name: 'chat room 1',
+		connected: false,
+		connectedUsers: []
+	},
+	{
+		id: 1,
+		name: 'chat room 2',
+		connected: false,
+		connectedUsers: []
+	}
+];
+
 const chatLog = [
 	{
 		id: 0,
@@ -55,5 +70,6 @@ const chatLog = [
 
 module.exports = {
 	chatRooms,
+	chatRoomsInit,
 	chatLog
 };

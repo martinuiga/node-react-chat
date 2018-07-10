@@ -11,7 +11,11 @@ const SideMenu = (props) => {
 	const { chatRooms } = props;
 	let roomsList = null;
 
-	if (chatRooms.length) roomsList = <RoomsList chatRooms={chatRooms} />;
+	if (chatRooms.length) roomsList =
+		<RoomsList
+			chatRooms={chatRooms}
+			joinGroup={props.joinGroup}
+		/>;
 
 	return (
 		<Paper>

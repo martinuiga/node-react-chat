@@ -10,6 +10,7 @@ import ChatArea from '../../components/ChatArea/ChatArea';
 import Modal from '../../components/Modal/Modal';
 import { initialize, setNickname } from "../../store/actions/index";
 import SideMenu from "../../components/SideMenu/SideMenu";
+import { joinGroup } from "../../store/actions/socket";
 
 class Layout extends Component {
 	state = {
@@ -62,6 +63,7 @@ class Layout extends Component {
 						xs={3}>
 						<SideMenu
 							chatRooms={this.props.chatRooms}
+							joinGroup={this.props.joinGroup}
 						/>
 					</Grid>
 					<Grid
@@ -111,6 +113,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setNickname: (nickname) => {
 			dispatch(setNickname(nickname))
+		},
+		joinGroup: (id) => {
+			dispatch(joinGroup(id))
 		}
 	}
 };

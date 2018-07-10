@@ -31,7 +31,7 @@ class RoomsList extends Component {
 	}
 
 	handleExpandToggle = (id) => {
-		const newState = Object.assign({}, this.state, {
+		const newState = _.assign({}, this.state, {
 			open: {
 				[id]: !this.state.open[id]
 			}
@@ -40,9 +40,14 @@ class RoomsList extends Component {
 		this.setState(newState);
 	};
 
+	handleGroupJoin = (id) => {
+		this.props.joinGroup(id);
+	};
+
 	userList(connectedUsers) {
 		const { classes } = this.props;
 		const usersList = [];
+
 
 		_.forEach(connectedUsers, (user) => {
 			usersList.push(
@@ -75,17 +80,31 @@ class RoomsList extends Component {
 					</Collapse>
 				);
 			}
-			const expandArrow = this.state.open[chatRoom.id] ? <ExpandLess /> : <ExpandMore />;
+
+			const expandLess = <ExpandLess
+				button="true"
+				onClick={() => {
+					(hasUsers) ? this.handleExpandToggle(chatRoom.id) : null
+				}}
+			/>;
+			const expandMore = <ExpandMore
+				button="true"
+				onClick={() => {
+					(hasUsers) ? this.handleExpandToggle(chatRoom.id) : null
+				}}
+			/>;
+			const expandArrow = this.state.open[chatRoom.id] ? expandLess : expandMore;
 
 			chatRoomListItems.push(
 				<Fragment key={chatRoom.id}>
-					<ListItem button key={chatRoom.id} onClick={() => {
-						(hasUsers) ? this.handleExpandToggle(chatRoom.id) : null
-					}}>
+					<ListItem button key={chatRoom.id}>
 						<ListItemIcon>
 							{chatRoom.connected ? <ChatConnectedIcon /> : <ChatNotConnectedIcon />}
 						</ListItemIcon>
-						<ListItemText inset primary={chatRoom.name} />
+						<ListItemText inset primary={chatRoom.name} onClick={() => {
+							this.handleGroupJoin(chatRoom.id);
+						}}
+						/>
 						{hasUsers ? expandArrow : null}
 					</ListItem>
 					{subList}
