@@ -34,7 +34,7 @@ class SocketIoController {
 	}
 
 	actionMessage(action) {
-
+		console.log(action.data.nickname);
 	}
 
 	actionJoinRoom(action) {

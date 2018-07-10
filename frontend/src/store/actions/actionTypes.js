@@ -4,3 +4,4 @@ export const SEND_TO_SERVER_EXAMPLE = 'server/send-to-server-example';
 export const INITIALIZE = "server/initialize";
 export const SET_NICKNAME = "SET_NICKNAME";
 export const INITIALIZE_ROOMS = 'INITIALIZE_ROOMS';
+export const SEND_MESSAGE = 'server/message';
