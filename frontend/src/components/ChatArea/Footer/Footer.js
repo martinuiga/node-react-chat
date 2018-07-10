@@ -1,5 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const Footer = (props) => {
 	let text = "";
@@ -9,12 +10,14 @@ const Footer = (props) => {
 		text = "is";
 	}
 	return (
-		<Typography
-			variant="caption"
-			align="center"
-			color="default">
-			{props.users.join(", ")} {text} typing
-        </Typography>
+		<Grid item>
+			<Typography
+				variant="caption"
+				align="center"
+				color="default">
+				{props.users.join(", ")} {text} typing
+        	</Typography>
+		</Grid>
 	);
 };
 

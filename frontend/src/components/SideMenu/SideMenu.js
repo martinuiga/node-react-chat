@@ -1,13 +1,21 @@
 import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 
 import styles from './SideMenuStyles';
+import RoomsList from "./RoomsList/RoomsList";
 
 const SideMenu = (props) => {
 	const { classes } = props;
+	const { chatRooms } = props;
+	let roomsList = null;
+
+	if (chatRooms.length) roomsList =
+		<RoomsList
+			chatRooms={chatRooms}
+			joinGroup={props.joinGroup}
+		/>;
 
 	return (
 		<Paper>
@@ -17,8 +25,7 @@ const SideMenu = (props) => {
 					paper: classes.drawerPaper,
 				}}
 			>
-				<MenuItem>Menu Item</MenuItem>
-				<MenuItem>Menu Item 2</MenuItem>
+				{roomsList}
 			</Drawer>
 		</Paper>
 	);

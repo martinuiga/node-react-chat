@@ -1,21 +1,31 @@
-const config = require('../../config/config.js');
 const _ = require('lodash');
-const socketActions = require('../../constants/socketActions');
+
+const config = require('../config/config.js');
+const socketActions = require('../constants/socketActions');
+const util = require('../util/util');
+const ChatRoomController = require('./ChatRoomController');
 
 class SocketIoController {
-	constructor(socket) {
+	constructor(socket, chatRooms, chatLog, userCounter) {
 		this.socket = socket;
+		this.chatRooms = chatRooms;
+		this.chatLog = chatLog;
+		this.userCounter = userCounter;
 	}
 
 	handleEvents() {
 		console.log('a user connected');
+		this.actionInitialize();
+		console.log(this.socket);
 		this.socket.on('action', (action) => {
 			console.log(action.type);
 			switch (action.type) {
-				case socketActions.INITIALIZE:
-					return this.actionInitialize(action);
-				case socketActions.SEND_TO_SERVER_EXAMPLE:
-					return this.actionExample(action);
+				case socketActions.MESSAGE:
+					return this.actionMessage(action);
+				case socketActions.JOIN_GROUP:
+					return this.actionJoinRoom(action);
+				default:
+					return console.log('Unknown action ', action.type);
 			}
 		});
 		this.socket.on('disconnect', () => {
@@ -23,17 +33,28 @@ class SocketIoController {
 		});
 	}
 
-	actionInitialize(action) {
-		setTimeout(() => {
-			this.socket.emit('action', {
-				type: 'EXAMPLE_FROM_SERVER',
-				data: {message: 'Message from server 5 seconds after connection!'}
-			})
-		}, 5000);
+	actionInitialize() {
+		this.socket.emit('action', {
+			type: 'INITIALIZE_ROOMS',
+			data: {
+				chatRooms: util.chatRooms,
+				chatLog: util.chatLog
+			}
+		})
 	}
 
-	actionExample(action) {
-		console.log(action);
+	actionMessage(action) {
+		console.log(action.data.nickname);
+	}
+
+	actionJoinRoom(action) {
+		const groupId = action.data.groupId;
+
+		if (!groupId) return null; // TODO return error to client
+
+		//not sure if this is a good idea to rewrite like that
+		const userChatRooms = ChatRoomController.joinGroup(this.chatRooms, groupId);
+
 	}
 }
 
