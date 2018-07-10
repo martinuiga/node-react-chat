@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
+import PlusIcon from '@material-ui/icons/Add';
 import PersonIcon from '@material-ui/icons/Person';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ChatConnectedIcon from '@material-ui/icons/ChatBubble';
@@ -42,14 +43,16 @@ class RoomsList extends Component {
 
 	handleGroupJoin = (id) => {
 		this.props.joinGroup(id);
+		console.log(id);
 	};
 
-	userList(connectedUsers) {
+	userList(connectedUsers, chatRoomId) {
 		const { classes } = this.props;
 		const usersList = [];
-
+		let selfInRoom = true;
 
 		_.forEach(connectedUsers, (user) => {
+			if (user.self) selfInRoom = false;
 			usersList.push(
 				<ListItem button className={classes.nested} key={user.id}>
 					<ListItemIcon>
@@ -57,9 +60,32 @@ class RoomsList extends Component {
 					</ListItemIcon>
 					<ListItemText inset primary={user.name} />
 				</ListItem>
-			)
+			);
 		});
+
+		if (selfInRoom) {
+			usersList.unshift(
+				this.addJoinRoomList(chatRoomId)
+			);
+		}
+
 		return usersList;
+	}
+
+	addJoinRoomList = (chatRoomId) => {
+		const { classes } = this.props;
+
+		return (
+			<ListItem button className={classes.nested} key={"jr" + chatRoomId}>
+				<ListItemIcon>
+					<PlusIcon />
+				</ListItemIcon>
+				<ListItemText inset primary="Join Room" onClick={() => {
+					this.handleGroupJoin(chatRoomId);
+				}} />
+			</ListItem>
+		);
+
 	}
 
 	render() {
@@ -70,12 +96,12 @@ class RoomsList extends Component {
 			let subList;
 			const hasUsers = !!(chatRoom.connectedUsers.length);
 			if (!hasUsers) {
-				subList = null;
+				subList = this.addJoinRoomList(chatRoom.id);
 			} else {
 				subList = (
 					<Collapse in={this.state.open[chatRoom.id]} timeout="auto" unmountOnExit>
 						<List component="div" disablePadding>
-							{this.userList(chatRoom.connectedUsers)}
+							{this.userList(chatRoom.connectedUsers, chatRoom.id)}
 						</List>
 					</Collapse>
 				);
@@ -101,10 +127,7 @@ class RoomsList extends Component {
 						<ListItemIcon>
 							{chatRoom.connected ? <ChatConnectedIcon /> : <ChatNotConnectedIcon />}
 						</ListItemIcon>
-						<ListItemText inset primary={chatRoom.name} onClick={() => {
-							this.handleGroupJoin(chatRoom.id);
-						}}
-						/>
+						<ListItemText inset primary={chatRoom.name} />
 						{hasUsers ? expandArrow : null}
 					</ListItem>
 					{subList}
