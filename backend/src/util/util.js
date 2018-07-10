@@ -2,22 +2,26 @@ const chatRooms = [
 	{
 		id: 0,
 		name: 'chat room 1',
+		connected: true, // channel user is in
 		connectedUsers: [
 			{
 				id: 0,
 				name: 'Jüri',
 				status: 'online',
+				self: false
 			},
 			{
 				id: 1,
 				name: 'Juss',
-				status: 'away'
+				status: 'away',
+				self: true
 			}
 		]
 	},
 	{
 		id: 1,
 		name: 'chat room 2',
+		connected: false,
 		connectedUsers: []
 	}
 ];
