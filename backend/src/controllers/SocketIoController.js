@@ -55,7 +55,6 @@ class SocketIoController {
 
 		//not sure if this is a good idea to rewrite like that
 		const userChatRooms = ChatRoomController.joinRoom(this.chatRooms, groupId);
-
 	}
 }
 

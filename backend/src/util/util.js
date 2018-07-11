@@ -68,6 +68,16 @@ const chatLog = [
 	}
 ];
 
+const user = [
+	{
+		socketId: [
+			'asd123', 'asdasd', '123123'
+		],
+		userId: 0,
+		nickname: 'bob'
+	}
+];
+
 module.exports = {
 	chatRooms,
 	chatRoomsInit,

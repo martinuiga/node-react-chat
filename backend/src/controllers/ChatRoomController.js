@@ -7,15 +7,15 @@ class ChatRoomController {
 	}
 
 	whichRoom(chatRooms, userId) {
-		let roomId;
+		let room;
 
 		_.forEach(chatRooms, chatRoom => {
 			const user = _.find(chatRoom.connectedUsers, { id: userId });
 			if (!user) return;
-			roomId = chatRoom;
+			room = chatRoom;
 			return false;
 		});
-		return roomId;
+		return room;
 	}
 }
 
