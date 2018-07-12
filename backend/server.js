@@ -13,12 +13,13 @@ const SocketIoController = require('./src/controllers/SocketIoController');
 const util = require('./src/util/util');
 
 let socketController;
-let chatRooms = util.chatRoomsInit;
+let chatRooms = util.chatRooms;
 let chatLog;
-let userCounter = 0;
+const users = [];
 
 io.on('connection', (socket) => {
-	socketController = new SocketIoController(socket, chatRooms, chatLog, userCounter);
+	// console.log(io.sockets.sockets);
+	socketController = new SocketIoController(socket, chatRooms, chatLog, users);
 	socketController.handleEvents();
 });
 console.log(`Server started on port ${port}`);
