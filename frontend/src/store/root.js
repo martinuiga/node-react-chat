@@ -31,7 +31,6 @@ store.subscribe(() => {
 // 	type: 'server/initialize',
 // });
 socket.on('connect', () => {
-	console.log('CONNECTED');
 	if (store.getState().socket.connection !== 1) {
 		store.dispatch({
 			type: CONN_STATUS,
@@ -40,7 +39,6 @@ socket.on('connect', () => {
 	}
 });
 socket.on('disconnect', () => {
-	console.log('DISCONNECTED');
 	if (store.getState().socket.connection !== 0) {
 		store.dispatch({
 			type: CONN_STATUS,
@@ -49,7 +47,6 @@ socket.on('disconnect', () => {
 	}
 });
 socket.on('reconnect', () => {
-	console.log('RECONNECTED');
 	store.dispatch({
 		type: RECONNECT,
 		data: {

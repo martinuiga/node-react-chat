@@ -59,7 +59,6 @@ class SocketIoController {
 				});
 				return null;
 			} else {
-				console.log(this.users);
 				UserController.userReconnected(this.users, this.socket, activeSameUser);
 			}
 		}
