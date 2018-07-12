@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+import _ from 'lodash';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -11,6 +12,22 @@ import MessageInput from '../MessageInput/MessageInput';
 
 const ChatArea = (props) => {
 	const { classes } = props;
+	const { chatRooms } = props;
+
+	let users = [];
+	let room = "";
+
+	// Tried some fancy lodash functions, did not get it to work
+	_.forEach(chatRooms, chatRoom => {
+		_.forEach(chatRoom.connectedUsers, connectedUser => {
+			users.push(connectedUser.name);
+			if (connectedUser.self) {
+				room = chatRoom.name;
+			}
+		});
+	});
+
+	if (room === "") users = [];
 
 	return (
 		<Grid container
@@ -23,8 +40,8 @@ const ChatArea = (props) => {
 			<Grid item
 				xs={'auto'}>
 				<Header
-					users={props.users}
-					room={props.room} />
+					users={users}
+					room={room} />
 			</Grid>
 			<Grid item
 				xs={'auto'}>
@@ -36,11 +53,11 @@ const ChatArea = (props) => {
 						className={classes.test}>
 						<Messages />
 						<Footer
-							users={props.users} />
+							//Users that are typing go here
+							users={users} />
 					</Grid>
 				</Paper>
 			</Grid>
-			{/* Placeholder */}
 			<Grid item
 				xs={'auto'}>
 				<Paper className={classes.paper}>

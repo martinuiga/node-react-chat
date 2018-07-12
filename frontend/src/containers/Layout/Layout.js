@@ -48,8 +48,6 @@ class Layout extends Component {
 	};
 
 	render() {
-		const placeHolderNames = ["Bob", "Tom", "Tiit", "Priit"];
-		const placeHolderRoom = "Cool Stories";
 		const { classes } = this.props;
 		let content = "";
 
@@ -70,8 +68,7 @@ class Layout extends Component {
 						item
 						xs={9}>
 						<ChatArea
-							users={placeHolderNames}
-							room={placeHolderRoom}
+							chatRooms={this.props.chatRooms}
 						/>
 					</Grid>
 				</Grid>
