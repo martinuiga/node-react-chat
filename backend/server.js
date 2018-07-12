@@ -16,10 +16,10 @@ let socketController;
 let chatRooms = util.chatRooms;
 let chatLog;
 const users = [];
-let userCounter = 0;
 
 io.on('connection', (socket) => {
-	socketController = new SocketIoController(socket, chatRooms, chatLog, userCounter);
+	// console.log(io.sockets.sockets);
+	socketController = new SocketIoController(socket, chatRooms, chatLog, users);
 	socketController.handleEvents();
 });
 console.log(`Server started on port ${port}`);

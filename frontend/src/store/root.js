@@ -1,10 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import io from 'socket.io-client';
 import createSocketIoMiddleware from 'redux-socket.io';
-import { CONN_STATUS } from "../store/actions/actionTypes";
 
 import socketReducer from './reducers/socket';
 import userReducer from './reducers/user';
+import { CONN_STATUS, RECONNECT } from "./actions/actionTypes";
 
 let socket = io(process.env.REACT_APP_SOCKET_ADDR);
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
@@ -45,6 +45,15 @@ socket.on('disconnect', () => {
 			status: 0
 		});
 	}
+});
+socket.on('reconnect', () => {
+	store.dispatch({
+		type: RECONNECT,
+		data: {
+			nickname: localStorage.getItem('nickname'),
+			id: localStorage.getItem('id')
+		}
+	})
 });
 
 export default store;

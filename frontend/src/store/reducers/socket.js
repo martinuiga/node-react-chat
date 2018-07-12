@@ -1,4 +1,4 @@
-import { CONN_STATUS, EXAMPLE_FROM_SERVER, INITIALIZE_ROOMS } from "../actions/actionTypes";
+import { CONN_STATUS, EXAMPLE_FROM_SERVER, INITIALIZE_ROOMS, NEW_NAME_REQUIRED } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
@@ -21,6 +21,7 @@ const setMessage = (state, action) => {
 };
 
 const setMessageRoomData = (state, action) => {
+	localStorage.setItem('id', action.data.id);
 	return updateObject(state, {
 		chatRooms: action.data.chatRooms,
 		chatLog: action.data.chatLog
@@ -36,6 +37,13 @@ export default (state = initialState, action) => {
 		case INITIALIZE_ROOMS:
 			console.log(action);
 			return setMessageRoomData(state, action);
+		case NEW_NAME_REQUIRED:
+			console.log(action);
+		// TODO Remove prevous nickname and ID from localstorage and display modal again
+		// action.data:
+		// {
+		// 	nickname: 'old_name' // Can be used to display custom error
+		// }
 		default:
 			return state;
 	}
