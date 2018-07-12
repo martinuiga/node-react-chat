@@ -88,7 +88,6 @@ class SocketIoController {
 	}
 
 	actionJoinRoom(action) {
-		console.log(action);
 		const groupId = action.data.groupId;
 
 		if (groupId === undefined || groupId === null) return null; // TODO return error to client

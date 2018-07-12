@@ -18,10 +18,12 @@ export const sendResponse = (message) => {
 	}
 };
 
-export const joinGroup = (id) => {
+export const joinRoom = (id) => {
+	console.log('join room');
 	return {
 		type: JOIN_GROUP,
 		data: {
+			userId: localStorage.getItem('id'),
 			groupId: id
 		}
 	}

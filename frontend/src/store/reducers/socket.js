@@ -44,6 +44,7 @@ export default (state = initialState, action) => {
 		// {
 		// 	nickname: 'old_name' // Can be used to display custom error
 		// }
+			return state;
 		default:
 			return state;
 	}
