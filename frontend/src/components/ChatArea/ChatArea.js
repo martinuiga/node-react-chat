@@ -20,7 +20,7 @@ const ChatArea = (props) => {
 	// Tried some fancy lodash functions, did not get it to work
 	_.forEach(chatRooms, chatRoom => {
 		_.forEach(chatRoom.connectedUsers, connectedUser => {
-			users.push(connectedUser.name);
+			users.push(connectedUser.nickname);
 			if (connectedUser.self) {
 				room = chatRoom.name;
 			}
