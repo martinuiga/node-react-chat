@@ -8,7 +8,7 @@ import { styles } from './LayoutStyles';
 import Header from '../../components/Header/Header';
 import ChatArea from '../../components/ChatArea/ChatArea';
 import Modal from '../../components/Modal/Modal';
-import { initialize, setNickname, joinRoom } from "../../store/actions/index";
+import { initialize, setNickname, joinRoom, closeSnack } from "../../store/actions/index";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import Snackbar from '../../components/Snackbar/Snackbar';
 
@@ -16,7 +16,6 @@ class Layout extends Component {
 	state = {
 		nickname: "",
 		error: false,
-		snackOpen: false
 	}
 
 	componentWillMount() {
@@ -32,7 +31,7 @@ class Layout extends Component {
 			return;
 		}
 
-		this.setState({ snackOpen: false });
+		this.props.closeSnack();
 	};
 
 	handleModalClose = () => {
@@ -98,10 +97,10 @@ class Layout extends Component {
 					{content}
 				</div>
 				<Snackbar
-					open={this.state.snackOpen}
+					open={this.props.snackOpen}
 					close={this.handleSnackClose}
 					message={this.props.serverError.message}
-					severity={this.props.serverError.severity}/>
+					severity={this.props.serverError.severity} />
 			</Fragment>
 		);
 	}
@@ -113,7 +112,8 @@ const mapStateToProps = (state) => {
 		chatRooms: state.socket.chatRooms,
 		nickInUse: state.socket.nickInUse,
 		modalOpen: state.socket.modalOpen,
-		serverError: state.socket.serverError
+		serverError: state.socket.serverError,
+		snackOpen: state.socket.snackOpen
 	};
 };
 
@@ -128,6 +128,9 @@ const mapDispatchToProps = (dispatch) => {
 		joinRoom: (id) => {
 			dispatch(joinRoom(id))
 		},
+		closeSnack: () => {
+			dispatch(closeSnack())
+		}
 	}
 };
 

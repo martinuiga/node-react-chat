@@ -1,17 +1,11 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
-	close: {
-		width: theme.spacing.unit * 4,
-		height: theme.spacing.unit * 4,
-	},
-});
+import { styles2 } from './SnackbarStyles';
+import SnackBarWrapper from './SnackBarWrapper';
 
-const SimpleSnackbar = (props) => {
+const SnackbarMsg = (props) => {
 	const { classes } = props;
 
 	return (
@@ -24,25 +18,16 @@ const SimpleSnackbar = (props) => {
 				open={props.open}
 				autoHideDuration={6000}
 				onClose={props.close}
-				ContentProps={{
-					'aria-describedby': 'message-id',
-				}}
-				message={<span id="message-id">{props.severity}:{props.message}</span>}
-				action={[
-					<IconButton
-						key="close"
-						aria-label="Close"
-						color="inherit"
-						className={classes.close}
-						onClick={props.close}
-					>
-						<CloseIcon />
-					</IconButton>,
-				]}
-			/>
+			>
+				<SnackBarWrapper
+					variant={props.severity}
+					className={classes.margin}
+					message={props.message}
+					onClose={props.close}
+				/>
+			</Snackbar>
 		</div>
 	);
 }
 
-
-export default withStyles(styles)(SimpleSnackbar);
+export default withStyles(styles2)(SnackbarMsg);
