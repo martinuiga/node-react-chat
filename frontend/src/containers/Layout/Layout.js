@@ -8,13 +8,11 @@ import { styles } from './LayoutStyles';
 import Header from '../../components/Header/Header';
 import ChatArea from '../../components/ChatArea/ChatArea';
 import Modal from '../../components/Modal/Modal';
-import { initialize, setNickname } from "../../store/actions/index";
+import { initialize, setNickname, joinRoom } from "../../store/actions/index";
 import SideMenu from "../../components/SideMenu/SideMenu";
-import { joinRoom } from "../../store/actions/socket";
 
 class Layout extends Component {
 	state = {
-		modalOpen: (localStorage.getItem('nickname') ? false : true),
 		nickname: "",
 		error: false
 	}
@@ -33,8 +31,7 @@ class Layout extends Component {
 
 	handleModalSubmit = () => {
 		if (this.state.nickname !== "") {
-			this.setState({ modalOpen: false });
-			this.setState({ error: true });
+			this.setState({ error: false });
 			localStorage.setItem('nickname', this.state.nickname);
 			this.props.setNickname(this.state.nickname);
 			this.props.initialize(this.state.nickname);
@@ -51,7 +48,7 @@ class Layout extends Component {
 		const { classes } = this.props;
 		let content = "";
 
-		if (this.props.nickname !== "" && !this.state.modalOpen) {
+		if (this.props.nickname !== "" && !this.props.modalOpen && !this.props.nickInUse) {
 			content = (
 				<Grid
 					container
@@ -62,6 +59,7 @@ class Layout extends Component {
 						<SideMenu
 							chatRooms={this.props.chatRooms}
 							joinRoom={this.props.joinRoom}
+							myId={this.props.nickname}
 						/>
 					</Grid>
 					<Grid
@@ -78,13 +76,13 @@ class Layout extends Component {
 		return (
 			<Fragment>
 				<Modal
-					open={this.state.modalOpen}
-					close={this.handleModalClose}
+					open={this.props.modalOpen}
 					submit={this.handleModalSubmit}
 					change={this.handleModalInputChange}
 					text="Enter Your Nickname"
 					label="Nickname"
-					error={this.state.error} />
+					errorMessage={this.props.nickInUse ? "Nickname is in use" : ""}
+					error={this.state.error || this.props.nickInUse} />
 				<Header />
 				<div className={classes.root}>
 					{content}
@@ -96,10 +94,10 @@ class Layout extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		// connection: state.socket.connection,
-		// message: state.socket.message,
 		nickname: state.user.nickname,
-		chatRooms: state.socket.chatRooms
+		chatRooms: state.socket.chatRooms,
+		nickInUse: state.socket.nickInUse,
+		modalOpen: state.socket.modalOpen
 	};
 };
 
@@ -113,7 +111,7 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		joinRoom: (id) => {
 			dispatch(joinRoom(id))
-		}
+		},
 	}
 };
 

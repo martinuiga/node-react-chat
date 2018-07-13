@@ -16,18 +16,20 @@ const ChatArea = (props) => {
 
 	let users = [];
 	let room = "";
+	const myId = parseInt(localStorage.getItem('id'), 10);
 
-	// Tried some fancy lodash functions, did not get it to work
 	_.forEach(chatRooms, chatRoom => {
-		_.forEach(chatRoom.connectedUsers, connectedUser => {
-			users.push(connectedUser.nickname);
-			if (connectedUser.self) {
-				room = chatRoom.name;
+		const isUserInRoom = !!_.find(chatRoom.connectedUsers, { id: myId });
+			if (isUserInRoom) {
+				room = chatRoom;
 			}
-		});
+	});
+	// Can do this better
+	_.forEach(room.connectedUsers, user => {
+		users.push(user.nickname);
 	});
 
-	if (room === "") users = [];
+	if (room.name === "") users = [];
 
 	return (
 		<Grid container
@@ -41,7 +43,7 @@ const ChatArea = (props) => {
 				xs={'auto'}>
 				<Header
 					users={users}
-					room={room} />
+					room={room.name} />
 			</Grid>
 			<Grid item
 				xs={'auto'}>
