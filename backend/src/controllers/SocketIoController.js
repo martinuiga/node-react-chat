@@ -45,7 +45,7 @@ class SocketIoController {
 		console.log('initialize');
 		const nickname = action.data.nickname;
 
-		if (!action.data.nickname) return null;
+		if (!action.data.nickname) return this.sendError('Nickname missing', 'Error');
 		const users = this.users;
 		const userId = users.length;
 		const activeSameUser = _.find(users, { nickname: nickname });
@@ -96,7 +96,7 @@ class SocketIoController {
 	actionJoinRoom(action) {
 		const roomId = action.data.roomId;
 
-		if (roomId === undefined || roomId === null) return null; // TODO return error to client
+		if (roomId === undefined || roomId === null) return this.sendError('Room Id missing', 'Error');
 		const user = UserController.getUserWithSocketId(this.users, this.socket.id);
 
 		ChatRoomController.joinRoom(this.chatRooms, roomId, user);
@@ -121,6 +121,16 @@ class SocketIoController {
 			type: 'ROOM_UPDATE',
 			data: {
 				chatRooms: chatRooms
+			}
+		});
+	}
+
+	sendError(message, severity) {
+		this.socket.emit('action', {
+			type: 'SERVER_ERROR',
+			data: {
+				message,
+				severity
 			}
 		});
 	}
