@@ -4,7 +4,7 @@ class ChatRoomController {
 
 	joinRoom(chatRooms, roomId, user) {
 		if (!user || !user.id) return null;
-		const isAlreadyInAnyRoom = !!this.whichRoom(chatRooms, user.id);
+		const isAlreadyInAnyRoom = !!this.whichRoomUserIn(chatRooms, user.id);
 
 		if (isAlreadyInAnyRoom) {
 			chatRooms = this.leaveRoom(chatRooms, user);
@@ -45,7 +45,7 @@ class ChatRoomController {
 		return chatRooms;
 	}
 
-	whichRoom(chatRooms, userId) {
+	whichRoomUserIn(chatRooms, userId) {
 		let room = null;
 
 		_.forEach(chatRooms, (chatRoom) => {
@@ -56,6 +56,10 @@ class ChatRoomController {
 			return false;
 		});
 		return room;
+	}
+
+	getRoomNameWithId(chatRooms, id) {
+		return _.find(chatRooms, { id });
 	}
 
 	filterOffline(chatRooms) {

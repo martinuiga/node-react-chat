@@ -42,7 +42,6 @@ class SocketIoController {
 	}
 
 	actionInitialize(action, id) {
-		console.log('initialize');
 		const nickname = action.data.nickname;
 
 		if (!action.data.nickname) return this.sendError('Nickname missing', 'Error');
@@ -63,13 +62,13 @@ class SocketIoController {
 				UserController.userReconnected(this.users, this.socket, activeSameUser);
 			}
 		}
-
 		const currentUser = {
 			id: userId,
 			nickname,
 			socketId: id,
 			connected: true
 		};
+
 		users.unshift({
 			...currentUser
 		});
@@ -87,6 +86,9 @@ class SocketIoController {
 		});
 
 		this.updateRoomsOthers(this.chatRooms, this.users, this.socket);
+		const roomName = ChatRoomController.getRoomNameWithId(this.chatRooms, 0).name;
+
+		this.socket.join(roomName);
 	}
 
 	actionMessage(action) {
@@ -98,11 +100,19 @@ class SocketIoController {
 
 		if (roomId === undefined || roomId === null) return this.sendError('Room Id missing', 'Error');
 		const user = UserController.getUserWithSocketId(this.users, this.socket.id);
+		const currentRoomName = ChatRoomController.whichRoomUserIn(this.chatRooms, user.id).name;
 
 		ChatRoomController.joinRoom(this.chatRooms, roomId, user);
 		this.updateRoomsAll(this.chatRooms, this.users, this.io);
+		const roomName = ChatRoomController.getRoomNameWithId(this.chatRooms, roomId).name;
+
+		this.socket.leave(currentRoomName, (error) => {
+			this.sendError(error, 'Error')
+		});
+		this.socket.join(roomName);
 	}
 
+	// Update for everyone
 	updateRoomsAll(chatRooms, users, io) {
 		ChatRoomController.updateRooms(chatRooms, users);
 
@@ -114,6 +124,7 @@ class SocketIoController {
 		});
 	}
 
+	// Update for everyone except yourself
 	updateRoomsOthers(chatRooms, users, socket) {
 		ChatRoomController.updateRooms(chatRooms, users);
 
