@@ -1,4 +1,4 @@
-import { INITIALIZE, JOIN_GROUP, SEND_TO_SERVER_EXAMPLE } from "./actionTypes";
+import { INITIALIZE, JOIN_GROUP, SEND_TO_SERVER_EXAMPLE, CLOSE_SNACK } from "./actionTypes";
 
 export const initialize = (nickname) => {
 	return {
@@ -25,6 +25,15 @@ export const joinRoom = (id) => {
 		data: {
 			userId: localStorage.getItem('id'),
 			roomId: id
+		}
+	}
+};
+
+export const closeSnack = () => {
+	return {
+		type: CLOSE_SNACK,
+		data: {
+
 		}
 	}
 };

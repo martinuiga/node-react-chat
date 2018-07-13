@@ -3,6 +3,8 @@ import {
 	INITIALIZE_ROOMS,
 	NEW_NAME_REQUIRED,
 	ROOM_UPDATE,
+	SERVER_ERROR,
+	CLOSE_SNACK
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
@@ -11,7 +13,9 @@ const initialState = {
 	modalOpen: (localStorage.getItem('nickname') ? false : true),
 	chatRooms: [],
 	chatLog: [],
-	nickInUse: false
+	nickInUse: false,
+	serverError: {},
+	snackOpen: false
 };
 
 const setConnection = (state, action) => {
@@ -44,6 +48,19 @@ const newNameRequired = (state, action) => {
 	});
 };
 
+const serverError = (state, action) => {
+	return updateObject(state, {
+		serverError: action.data,
+		snackOpen: true
+	})
+};
+
+const closeSnack = (state, action) => {
+	return updateObject(state, {
+		snackOpen: false
+	})
+};
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case CONN_STATUS:
@@ -56,6 +73,10 @@ export default (state = initialState, action) => {
 			return newNameRequired(state, action);
 		case ROOM_UPDATE:
 			return setUpdateRoom(state, action);
+		case SERVER_ERROR:
+			return serverError(state, action);
+		case CLOSE_SNACK:
+			return closeSnack(state, action);
 		default:
 			return state;
 	}
