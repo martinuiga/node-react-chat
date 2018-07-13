@@ -10,11 +10,13 @@ import ChatArea from '../../components/ChatArea/ChatArea';
 import Modal from '../../components/Modal/Modal';
 import { initialize, setNickname, joinRoom } from "../../store/actions/index";
 import SideMenu from "../../components/SideMenu/SideMenu";
+import Snackbar from '../../components/Snackbar/Snackbar';
 
 class Layout extends Component {
 	state = {
 		nickname: "",
-		error: false
+		error: false,
+		snackOpen: false
 	}
 
 	componentWillMount() {
@@ -24,6 +26,14 @@ class Layout extends Component {
 			this.props.initialize(nick);
 		}
 	}
+
+	handleSnackClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		this.setState({ snackOpen: false });
+	};
 
 	handleModalClose = () => {
 		this.setState({ error: true });
@@ -87,6 +97,11 @@ class Layout extends Component {
 				<div className={classes.root}>
 					{content}
 				</div>
+				<Snackbar
+					open={this.state.snackOpen}
+					close={this.handleSnackClose}
+					message={this.props.serverError.message}
+					severity={this.props.serverError.severity}/>
 			</Fragment>
 		);
 	}
@@ -97,7 +112,8 @@ const mapStateToProps = (state) => {
 		nickname: state.user.nickname,
 		chatRooms: state.socket.chatRooms,
 		nickInUse: state.socket.nickInUse,
-		modalOpen: state.socket.modalOpen
+		modalOpen: state.socket.modalOpen,
+		serverError: state.socket.serverError
 	};
 };
 
