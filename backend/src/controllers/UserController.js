@@ -6,11 +6,14 @@ class UserController {
 	}
 
 	userDisconnected(users, socket) {
+		let userWhoDisconnected = null;
 		_.forEach(users, (user) => {
 			if (user.socketId !== socket.id) return;
 			user.connected = false;
+			userWhoDisconnected = user;
 			return false;
 		});
+		return userWhoDisconnected;
 	}
 
 
