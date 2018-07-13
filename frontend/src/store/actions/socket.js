@@ -24,7 +24,7 @@ export const joinRoom = (id) => {
 		type: JOIN_GROUP,
 		data: {
 			userId: localStorage.getItem('id'),
-			groupId: id
+			roomId: id
 		}
 	}
 };

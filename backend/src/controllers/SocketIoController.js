@@ -2,10 +2,12 @@ const _ = require('lodash');
 
 const socketActions = require('../constants/socketActions');
 const ChatRoomController = require('./ChatRoomController');
+const UserController = require('./UserController');
 
 class SocketIoController {
-	constructor(socket, chatRooms, chatLog, users) {
+	constructor(socket, io, chatRooms, chatLog, users) {
 		this.socket = socket;
+		this.io = io;
 		this.chatRooms = chatRooms;
 		this.chatLog = chatLog;
 		this.users = users;
@@ -22,44 +24,58 @@ class SocketIoController {
 				case socketActions.JOIN_GROUP:
 					return this.actionJoinRoom(action);
 				case socketActions.RECONNECT:
-					return this.actionReconnect(action);
+					return this.actionInitialize(action, this.socket.id);
 				default:
 					return console.log('Unknown action ', action.type);
 			}
 		});
+
 		this.socket.on('disconnect', () => {
 			console.log("disconnected");
-			_.forEach(this.users, (user) => {
-				if (user.socket !== this.socket.id) return;
-				user.connected = false;
-				return false;
-			});
+			UserController.userDisconnected(this.users, this.socket);
+			this.updateRoomsAll(this.chatRooms, this.users, this.io);
 		});
+		this.socket.on('reconnect', () => {
+			console.log('reconnect');
+			this.actionInitialize(action, this.socket.id);
+		})
 	}
 
 	actionInitialize(action, id) {
+		console.log('initialize');
 		const nickname = action.data.nickname;
 
 		if (!action.data.nickname) return null;
 		const users = this.users;
 		const userId = users.length;
-		const activeSameUser = _.find(users, { connected: true, nickname: nickname });
+		const activeSameUser = _.find(users, { nickname: nickname });
 
-		if (activeSameUser) {
-			this.socket.emit('action', {
-				type: 'NEW_NAME_REQUIRED',
-				data: {
-					nickname
-				}
-			});
-			return null;
+		if (activeSameUser || !nickname.length) {
+			if (activeSameUser.connected) {
+				this.socket.emit('action', {
+					type: 'NEW_NAME_REQUIRED',
+					data: {
+						nickname
+					}
+				});
+				return null;
+			} else {
+				UserController.userReconnected(this.users, this.socket, activeSameUser);
+			}
 		}
-		users.push({
+
+		const currentUser = {
 			id: userId,
 			nickname,
-			socket: id,
+			socketId: id,
 			connected: true
+		};
+		users.unshift({
+			...currentUser
 		});
+
+		ChatRoomController.joinRoom(this.chatRooms, 0, currentUser);
+		// ChatRoomController.updateRooms(this.chatRooms, this.users);
 
 		this.socket.emit('action', {
 			type: 'INITIALIZE_ROOMS',
@@ -68,19 +84,9 @@ class SocketIoController {
 				chatRooms: this.chatRooms,
 				chatLog: this.chatLog
 			}
-		})
-	}
-
-	actionReconnect(action) {
-		const id = action.data.id;
-		if (!action.data.nickname || !id) return null;
-
-		_.forEach(this.users, (user) => {
-			if (user.id !== id) return;
-			user.socket = this.socket.id;
-			user.connected = true;
-			return false;
 		});
+
+		this.updateRoomsOthers(this.chatRooms, this.users, this.socket);
 	}
 
 	actionMessage(action) {
@@ -88,12 +94,35 @@ class SocketIoController {
 	}
 
 	actionJoinRoom(action) {
-		const groupId = action.data.groupId;
+		const roomId = action.data.roomId;
 
-		if (groupId === undefined || groupId === null) return null; // TODO return error to client
+		if (roomId === undefined || roomId === null) return null; // TODO return error to client
+		const user = UserController.getUserWithSocketId(this.users, this.socket.id);
 
-		//not sure if this is a good idea to rewrite like that
-		const userChatRooms = ChatRoomController.joinRoom(this.chatRooms, groupId);
+		ChatRoomController.joinRoom(this.chatRooms, roomId, user);
+		this.updateRoomsAll(this.chatRooms, this.users, this.io);
+	}
+
+	updateRoomsAll(chatRooms, users, io) {
+		ChatRoomController.updateRooms(chatRooms, users);
+
+		io.sockets.emit('action', { //broadcast to everyone
+			type: 'ROOM_UPDATE',
+			data: {
+				chatRooms: chatRooms
+			}
+		});
+	}
+
+	updateRoomsOthers(chatRooms, users, socket) {
+		ChatRoomController.updateRooms(chatRooms, users);
+
+		socket.broadcast.emit('action', {
+			type: 'ROOM_UPDATE',
+			data: {
+				chatRooms: chatRooms
+			}
+		});
 	}
 
 }

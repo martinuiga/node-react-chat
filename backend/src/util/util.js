@@ -2,26 +2,11 @@ const chatRooms = [
 	{
 		id: 0,
 		name: 'chat room 1',
-		connected: true, // channel user is in
-		connectedUsers: [
-			{
-				id: 0,
-				name: 'Jüri',
-				status: 'online',
-				self: false
-			},
-			{
-				id: 1,
-				name: 'Juss',
-				status: 'away',
-				self: true
-			}
-		]
+		connectedUsers: []
 	},
 	{
 		id: 1,
 		name: 'chat room 2',
-		connected: false,
 		connectedUsers: []
 	}
 ];
@@ -68,18 +53,24 @@ const chatLog = [
 	}
 ];
 
-const user = [
+const users = [
 	{
-		socketId: [
-			'asd123', 'asdasd', '123123'
-		],
-		userId: 0,
-		nickname: 'bob'
+		id: 0,
+		socketId: 'asdasd',
+		nickname: 'Jüri',
+		connected: true,
+	},
+	{
+		id: 1,
+		socketId: 'asdasd123123',
+		nickname: 'Juss',
+		connected: true,
 	}
 ];
 
 module.exports = {
 	chatRooms,
 	chatRoomsInit,
-	chatLog
+	chatLog,
+	users
 };

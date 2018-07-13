@@ -19,6 +19,7 @@ import { withStyles } from "@material-ui/core/styles/index";
 
 class RoomsList extends Component {
 	state = { open: {} };
+	myId = parseInt(localStorage.getItem('id'), 10);
 
 	constructor(props) {
 		super(props);
@@ -51,13 +52,13 @@ class RoomsList extends Component {
 		let selfInRoom = true;
 
 		_.forEach(connectedUsers, (user) => {
-			if (user.self) selfInRoom = false;
+			if (user.id === this.myId) selfInRoom = false;
 			usersList.push(
 				<ListItem button className={classes.nested} key={user.id}>
 					<ListItemIcon>
-						{user.self ? <PersonIcon /> : <PersonOutlineIcon />}
+						{user.id === this.myId ? <PersonIcon /> : <PersonOutlineIcon />}
 					</ListItemIcon>
-					<ListItemText inset primary={user.name} />
+					<ListItemText inset primary={user.nickname} />
 				</ListItem>
 			);
 		});
@@ -75,13 +76,13 @@ class RoomsList extends Component {
 		const { classes } = this.props;
 
 		return (
-			<ListItem button className={classes.nested} key={"jr" + chatRoomId}>
+			<ListItem button className={classes.nested} key={"jr" + chatRoomId} onClick={() => {
+				this.handleGroupJoin(chatRoomId);
+			}}>
 				<ListItemIcon>
 					<PlusIcon />
 				</ListItemIcon>
-				<ListItemText inset primary="Join Room" onClick={() => {
-					this.handleGroupJoin(chatRoomId);
-				}} />
+				<ListItemText inset primary="Join Room" />
 			</ListItem>
 		);
 
@@ -119,12 +120,13 @@ class RoomsList extends Component {
 				}}
 			/>;
 			const expandArrow = this.state.open[chatRoom.id] ? expandLess : expandMore;
+			const connectedToRoom = !!_.find(chatRoom.connectedUsers, { id: this.myId });
 
 			chatRoomListItems.push(
 				<Fragment key={chatRoom.id}>
 					<ListItem button key={chatRoom.id}>
 						<ListItemIcon>
-							{chatRoom.connected ? <ChatConnectedIcon /> : <ChatNotConnectedIcon />}
+							{connectedToRoom ? <ChatConnectedIcon /> : <ChatNotConnectedIcon />}
 						</ListItemIcon>
 						<ListItemText inset primary={chatRoom.name} />
 						{hasUsers ? expandArrow : null}

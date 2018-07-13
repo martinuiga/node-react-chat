@@ -1,4 +1,10 @@
-import { CONN_STATUS, EXAMPLE_FROM_SERVER, INITIALIZE_ROOMS, NEW_NAME_REQUIRED } from "../actions/actionTypes";
+import {
+	CONN_STATUS,
+	EXAMPLE_FROM_SERVER,
+	INITIALIZE_ROOMS,
+	NEW_NAME_REQUIRED,
+	ROOM_UPDATE
+} from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
@@ -28,6 +34,12 @@ const setMessageRoomData = (state, action) => {
 	})
 };
 
+const setUpdateRoom = (state, action) => {
+	return updateObject(state, {
+		chatRooms: action.data.chatRooms
+	})
+};
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case CONN_STATUS:
@@ -45,6 +57,8 @@ export default (state = initialState, action) => {
 		// 	nickname: 'old_name' // Can be used to display custom error
 		// }
 			return state;
+		case ROOM_UPDATE:
+			return setUpdateRoom(state, action);
 		default:
 			return state;
 	}
