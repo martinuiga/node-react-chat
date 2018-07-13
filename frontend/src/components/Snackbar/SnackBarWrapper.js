@@ -20,11 +20,12 @@ const variantIcon = {
 
 const SnackbarWrapper = (props) => {
 	const { classes, className, message, onClose, variant, ...other } = props;
-	const Icon = variantIcon[variant];
+	const Icon = variantIcon[variant.toLowerCase()];
 
+	// variant.toLowerCase() only works without errors when applying it straight where it is used...
 	return (
 		<SnackbarContent
-			className={classNames(classes[variant], className)}
+			className={classNames(classes[variant.toLowerCase()], className)}
 			aria-describedby="message-snackbar"
 			message={
 				<span id="message-snackbar" className={classes.message}>

@@ -42,26 +42,6 @@ class SocketIoController {
 	}
 
 	actionInitialize(action, id) {
-		setTimeout(() => {
-			this.socket.emit('action', {
-				type: 'SERVER_ERROR',
-				data: {
-					message: "ERRRRRROOOOR",
-					severity: "warning"
-				}
-			});
-		}, 10000)
-
-		setTimeout(() => {
-			this.socket.emit('action', {
-				type: 'SERVER_ERROR',
-				data: {
-					message: "ERRRRRROOOOR2",
-					severity: "error"
-				}
-			});
-		}, 15000)
-
 		console.log('initialize');
 		const nickname = action.data.nickname;
 
