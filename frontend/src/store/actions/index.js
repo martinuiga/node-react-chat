@@ -1,6 +1,7 @@
 export {
 	initialize,
-	sendResponse
+	sendResponse,
+	joinRoom
 } from './socket';
 
 export {
