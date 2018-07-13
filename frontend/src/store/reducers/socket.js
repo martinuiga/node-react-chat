@@ -34,11 +34,11 @@ const setMessageRoomData = (state, action) => {
 	})
 };
 
-function setUpdateRoom(state, action) {
+const setUpdateRoom = (state, action) => {
 	return updateObject(state, {
 		chatRooms: action.data.chatRooms
 	})
-}
+};
 
 export default (state = initialState, action) => {
 	switch (action.type) {

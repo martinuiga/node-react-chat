@@ -48,7 +48,7 @@ class ChatRoomController {
 	whichRoom(chatRooms, userId) {
 		let room = null;
 
-		_.forEach(chatRooms, chatRoom => {
+		_.forEach(chatRooms, (chatRoom) => {
 			const user = _.find(chatRoom.connectedUsers, { id: userId });
 
 			if (!user) return;
@@ -56,6 +56,18 @@ class ChatRoomController {
 			return false;
 		});
 		return room;
+	}
+
+	filterOffline(chatRooms) {
+		let filteredOffline = chatRooms;
+		_.forEach(filteredOffline, (chatRoom) => {
+			chatRoom.connectedUsers.forEach(user => {
+				console.log(user);
+				if (user.connected) return;
+				_.remove(chatRoom.connectedUsers, user);
+			});
+		});
+		return filteredOffline;
 	}
 }
 

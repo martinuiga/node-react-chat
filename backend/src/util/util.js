@@ -2,18 +2,7 @@ const chatRooms = [
 	{
 		id: 0,
 		name: 'chat room 1',
-		connectedUsers: [
-			{
-				id: 0,
-				nickname: 'Jüri',
-				self: false //deprecated
-			},
-			{
-				id: 1,
-				nickname: 'Juss',
-				self: false //deprecated
-			}
-		]
+		connectedUsers: []
 	},
 	{
 		id: 1,

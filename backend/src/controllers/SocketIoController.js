@@ -33,6 +33,7 @@ class SocketIoController {
 		this.socket.on('disconnect', () => {
 			console.log("disconnected");
 			UserController.userDisconnected(this.users, this.socket);
+			this.updateRoomsAll(this.chatRooms, this.users, this.io);
 		});
 		this.socket.on('reconnect', () => {
 			console.log('reconnect');
@@ -74,7 +75,7 @@ class SocketIoController {
 		});
 
 		ChatRoomController.joinRoom(this.chatRooms, 0, currentUser);
-		ChatRoomController.updateRooms(this.chatRooms, this.users);
+		// ChatRoomController.updateRooms(this.chatRooms, this.users);
 
 		this.socket.emit('action', {
 			type: 'INITIALIZE_ROOMS',
@@ -84,6 +85,8 @@ class SocketIoController {
 				chatLog: this.chatLog
 			}
 		});
+
+		this.updateRoomsOthers(this.chatRooms, this.users, this.socket);
 	}
 
 	actionMessage(action) {
@@ -97,15 +100,31 @@ class SocketIoController {
 		const user = UserController.getUserWithSocketId(this.users, this.socket.id);
 
 		ChatRoomController.joinRoom(this.chatRooms, roomId, user);
-		ChatRoomController.updateRooms(this.chatRooms, this.users);
+		this.updateRoomsAll(this.chatRooms, this.users, this.io);
+	}
 
-		this.io.sockets.emit('action', {
+	updateRoomsAll(chatRooms, users, io) {
+		ChatRoomController.updateRooms(chatRooms, users);
+
+		io.sockets.emit('action', { //broadcast to everyone
 			type: 'ROOM_UPDATE',
 			data: {
-				chatRooms: this.chatRooms
+				chatRooms: chatRooms
 			}
 		});
 	}
+
+	updateRoomsOthers(chatRooms, users, socket) {
+		ChatRoomController.updateRooms(chatRooms, users);
+
+		socket.broadcast.emit('action', {
+			type: 'ROOM_UPDATE',
+			data: {
+				chatRooms: chatRooms
+			}
+		});
+	}
+
 }
 
 module.exports = SocketIoController;
