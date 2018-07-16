@@ -5,11 +5,10 @@ const ChatRoomController = require('./ChatRoomController');
 const UserController = require('./UserController');
 
 class SocketIoController {
-	constructor(socket, io, chatRooms, chatLog, users) {
+	constructor(socket, io, chatRooms, users) {
 		this.socket = socket;
 		this.io = io;
 		this.chatRooms = chatRooms;
-		this.chatLog = chatLog;
 		this.users = users;
 	}
 
@@ -19,7 +18,7 @@ class SocketIoController {
 			switch (action.type) {
 				case socketActions.INITIALIZE:
 					return this.actionInitialize(action, this.socket.id);
-				case socketActions.MESSAGE:
+				case socketActions.SEND_MESSAGE:
 					return this.actionMessage(action);
 				case socketActions.JOIN_GROUP:
 					return this.actionJoinRoom(action);
@@ -81,9 +80,10 @@ class SocketIoController {
 			data: {
 				id: userId,
 				chatRooms: this.chatRooms,
-				chatLog: this.chatLog
+				users: users
 			}
 		});
+		console.log(this.chatLog);
 
 		this.updateRoomsOthers(this.chatRooms, this.users, this.socket);
 		const roomName = ChatRoomController.getRoomNameWithId(this.chatRooms, 0).name;
@@ -92,7 +92,9 @@ class SocketIoController {
 	}
 
 	actionMessage(action) {
-		console.log(action.data.nickname);
+		if (action.data.message === "") return null;
+		ChatRoomController.updateChatLog(this.chatRooms, action.data, this.users);
+		this.updateRoomsAll(this.chatRooms, this.users, this.io);
 	}
 
 	actionJoinRoom(action) {
@@ -119,7 +121,8 @@ class SocketIoController {
 		io.sockets.emit('action', { //broadcast to everyone
 			type: 'ROOM_UPDATE',
 			data: {
-				chatRooms: chatRooms
+				chatRooms: chatRooms,
+				users: users
 			}
 		});
 	}
@@ -131,7 +134,8 @@ class SocketIoController {
 		socket.broadcast.emit('action', {
 			type: 'ROOM_UPDATE',
 			data: {
-				chatRooms: chatRooms
+				chatRooms: chatRooms,
+				users: users
 			}
 		});
 	}

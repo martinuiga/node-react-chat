@@ -1,31 +1,3 @@
-const chatRooms = [
-	{
-		id: 0,
-		name: 'chat room 1',
-		connectedUsers: []
-	},
-	{
-		id: 1,
-		name: 'chat room 2',
-		connectedUsers: []
-	}
-];
-
-const chatRoomsInit = [
-	{
-		id: 0,
-		name: 'chat room 1',
-		connected: false,
-		connectedUsers: []
-	},
-	{
-		id: 1,
-		name: 'chat room 2',
-		connected: false,
-		connectedUsers: []
-	}
-];
-
 const chatLog = [
 	{
 		id: 0,
@@ -50,6 +22,36 @@ const chatLog = [
 		owner: 0,
 		message: 'tont',
 		date: 123126
+	}
+];
+
+const chatRooms = [
+	{
+		id: 0,
+		name: 'chat room 1',
+		connectedUsers: [],
+		chatLog: chatLog
+	},
+	{
+		id: 1,
+		name: 'chat room 2',
+		connectedUsers: [],
+		chatLog: []
+	}
+];
+
+const chatRoomsInit = [
+	{
+		id: 0,
+		name: 'chat room 1',
+		connected: false,
+		connectedUsers: []
+	},
+	{
+		id: 1,
+		name: 'chat room 2',
+		connected: false,
+		connectedUsers: []
 	}
 ];
 

@@ -13,16 +13,18 @@ import MessageInput from '../MessageInput/MessageInput';
 const ChatArea = (props) => {
 	const { classes } = props;
 	const { chatRooms } = props;
-
+	const usersObj = props.users;
+	let chatLog;
 	let users = [];
 	let room = "";
 	const myId = parseInt(localStorage.getItem('id'), 10);
 
 	_.forEach(chatRooms, chatRoom => {
 		const isUserInRoom = !!_.find(chatRoom.connectedUsers, { id: myId });
-			if (isUserInRoom) {
-				room = chatRoom;
-			}
+		if (isUserInRoom) {
+			room = chatRoom;
+			chatLog = chatRoom.chatLog
+		}
 	});
 	// Can do this better
 	_.forEach(room.connectedUsers, user => {
@@ -53,7 +55,10 @@ const ChatArea = (props) => {
 						direction='column'
 						justify='flex-end'
 						className={classes.test}>
-						<Messages />
+						<Messages
+							chatLog={chatLog}
+							owner={myId}
+							users={usersObj} />
 						<Footer
 							//Users that are typing go here
 							users={users} />

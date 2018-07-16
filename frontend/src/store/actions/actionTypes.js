@@ -8,6 +8,6 @@ export const CLOSE_SNACK = 'CLOSE_SNACK';
 
 export const INITIALIZE = "server/initialize";
 export const JOIN_GROUP = 'server/join-group';
-export const SEND_MESSAGE = 'server/message';
+export const SEND_MESSAGE = 'server/send_message';
 export const SEND_TO_SERVER_EXAMPLE = 'server/send-to-server-example';
 export const RECONNECT = 'server/reconnect';

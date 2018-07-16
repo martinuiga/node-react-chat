@@ -1,6 +1,6 @@
 const socketActions = {
 	INITIALIZE: 'server/initialize',
-	MESSAGE: 'server/message',
+	SEND_MESSAGE: 'server/send_message',
 	JOIN_GROUP: 'server/join-group',
 	RECONNECT: 'server/reconnect',
 };

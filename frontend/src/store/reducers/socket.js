@@ -12,10 +12,10 @@ const initialState = {
 	connection: 0,
 	modalOpen: (localStorage.getItem('nickname') ? false : true),
 	chatRooms: [],
-	chatLog: [],
 	nickInUse: false,
 	serverError: {},
-	snackOpen: false
+	snackOpen: false,
+	users: []
 };
 
 const setConnection = (state, action) => {
@@ -28,7 +28,7 @@ const setMessageRoomData = (state, action) => {
 	localStorage.setItem('id', action.data.id);
 	return updateObject(state, {
 		chatRooms: action.data.chatRooms,
-		chatLog: action.data.chatLog,
+		users: action.data.users,
 		modalOpen: false,
 		nickInUse: false
 	});
@@ -36,7 +36,8 @@ const setMessageRoomData = (state, action) => {
 
 const setUpdateRoom = (state, action) => {
 	return updateObject(state, {
-		chatRooms: action.data.chatRooms
+		chatRooms: action.data.chatRooms,
+		users: action.data.users
 	});
 };
 
