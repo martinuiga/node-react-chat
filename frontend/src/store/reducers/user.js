@@ -1,9 +1,10 @@
-import { SET_NICKNAME } from "../actions/actionTypes";
+import {INITIALIZE_ROOMS, SET_NICKNAME} from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const userInitialState = {
-    nickname: ""
-}
+    nickname: "",
+	userId: null
+};
 
 const setNickname = (state, action) => {
     return updateObject(state, {
@@ -11,10 +12,18 @@ const setNickname = (state, action) => {
     });
 };
 
+const setUserId = (state, action) => {
+	return updateObject(state, {
+		userId: action.data.id
+	})
+};
+
 export default (state = userInitialState, action) => {
     switch (action.type) {
         case SET_NICKNAME:
             return setNickname(state, action);
+		case INITIALIZE_ROOMS:
+			return setUserId(state, action);
         default:
             return state
     }
