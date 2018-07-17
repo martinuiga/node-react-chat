@@ -13,8 +13,8 @@ import MessageInput from '../MessageInput/MessageInput';
 const ChatArea = (props) => {
 	const { classes } = props;
 	const { chatRooms } = props;
+	const { chatLog } = props;
 	const usersObj = props.users;
-	let chatLog;
 	let users = [];
 	let room = "";
 	const myId = parseInt(localStorage.getItem('id'), 10);
@@ -23,7 +23,6 @@ const ChatArea = (props) => {
 		const isUserInRoom = !!_.find(chatRoom.connectedUsers, { id: myId });
 		if (isUserInRoom) {
 			room = chatRoom;
-			chatLog = chatRoom.chatLog
 		}
 	});
 	// Can do this better

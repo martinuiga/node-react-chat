@@ -4,7 +4,8 @@ import {
 	NEW_NAME_REQUIRED,
 	ROOM_UPDATE,
 	SERVER_ERROR,
-	CLOSE_SNACK
+	CLOSE_SNACK,
+	ROOM_CHAT_UPDATE
 } from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
@@ -15,7 +16,8 @@ const initialState = {
 	nickInUse: false,
 	serverError: {},
 	snackOpen: false,
-	users: []
+	users: [],
+	chatLog: []
 };
 
 const setConnection = (state, action) => {
@@ -62,6 +64,12 @@ const closeSnack = (state, action) => {
 	})
 };
 
+const roomChatUpdate = (state, action) => {
+	return updateObject(state, {
+		chatLog: action.data.chatLog
+	})
+}
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case CONN_STATUS:
@@ -74,6 +82,8 @@ export default (state = initialState, action) => {
 			return newNameRequired(state, action);
 		case ROOM_UPDATE:
 			return setUpdateRoom(state, action);
+		case ROOM_CHAT_UPDATE:
+			return roomChatUpdate(state, action);
 		case SERVER_ERROR:
 			return serverError(state, action);
 		case CLOSE_SNACK:

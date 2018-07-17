@@ -1,42 +1,49 @@
 const chatLog = [
 	{
-		id: 0,
-		owner: 1, // Juss
-		message: 'Tere Jüri',
-		date: 123123
+		roomId: 0,
+		log: [
+			{
+				id: 0,
+				owner: 1, // Juss
+				message: 'Tere Jüri',
+				date: 123123
+			},
+			{
+				id: 1,
+				owner: 1,
+				message: 'Mis Teed?',
+				date: 123124
+			},
+			{
+				id: 2,
+				owner: 0,
+				message: 'hüppa pommi',
+				date: 123125
+			},
+			{
+				id: 3,
+				owner: 0,
+				message: 'tont',
+				date: 123126
+			}
+		]
 	},
 	{
-		id: 1,
-		owner: 1,
-		message: 'Mis Teed?',
-		date: 123124
-	},
-	{
-		id: 2,
-		owner: 0,
-		message: 'hüppa pommi',
-		date: 123125
-	},
-	{
-		id: 3,
-		owner: 0,
-		message: 'tont',
-		date: 123126
+		roomId: 1,
+		log: []
 	}
-];
+]
 
 const chatRooms = [
 	{
 		id: 0,
 		name: 'chat room 1',
 		connectedUsers: [],
-		chatLog: chatLog
 	},
 	{
 		id: 1,
 		name: 'chat room 2',
 		connectedUsers: [],
-		chatLog: []
 	}
 ];
 
