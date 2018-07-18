@@ -3,6 +3,7 @@ const _ = require('lodash');
 const socketActions = require('../constants/socketActions');
 const ChatRoomController = require('./ChatRoomController');
 const UserController = require('./UserController');
+const ChatLogController = require('./ChatLogController');
 
 class SocketIoController {
 	constructor(socket, io, chatRooms, chatLog, users) {
@@ -34,6 +35,8 @@ class SocketIoController {
 			console.log("disconnected");
 			UserController.userDisconnected(this.users, this.socket);
 			this.updateRoomsAll(this.chatRooms, this.users, this.io);
+			ChatLogController.checkAndClearLogs(this.users, this.chatLog);
+			console.log(this.chatLog);
 		});
 		this.socket.on('reconnect', () => {
 			console.log('reconnect');
@@ -81,7 +84,7 @@ class SocketIoController {
 			data: {
 				id: userId,
 				chatRooms: this.chatRooms,
-				chatLog: this.getChatLogForRoom(this.chatLog, 0),
+				chatLog: ChatLogController.getChatLogForRoom(this.chatLog, 0),
 				users: users
 			}
 		});
@@ -91,42 +94,13 @@ class SocketIoController {
 		const roomName = ChatRoomController.getRoomNameWithId(this.chatRooms, 0).name;
 
 		this.socket.join(roomName);
-		this.updateChatLogsAll(roomName, this.io, this.getChatLogForRoom(this.chatLog, 0));
-	}
-
-	getChatLogForRoom(chatLog, roomId) {
-		return (_.find(chatLog, { roomId: roomId })).log;
+		ChatLogController.updateChatLogFull(roomName, this.io, ChatLogController.getChatLogForRoom(this.chatLog, 0));
 	}
 
 	actionMessage(action) {
 		if (action.data.message === "") return this.sendError('Message missing', 'Error');
-		this.updateChatLogs(this.chatRooms, this.users, this.io,
+		ChatLogController.updateChatLog(this.chatRooms, this.users, this.io,
 			action.data.nickname, this.chatLog, action.data.message);
-	}
-
-	updateChatLogs(chatRooms, users, io, nickname, chatLog, message) {
-		const user = _.find(users, { nickname: nickname });
-		const room = ChatRoomController.whichRoomUserIn(chatRooms, user.id);
-		let chatlog = this.getChatLogForRoom(chatLog, room.id);
-		console.log(chatlog.log);
-		const newId = (chatlog.length > 0 ? _.last(chatlog).id + 1 : 0);
-		const newMessage = {
-			id: newId,
-			owner: user.id,
-			message: message,
-			date: new Date()
-		};
-		chatlog.push(newMessage);
-		this.updateChatLogsAll(room.name, io, chatlog);
-	}
-
-	updateChatLogsAll(roomName, io, chatLog) {
-		io.to(roomName).emit('action', { //broadcast to everyone
-			type: 'ROOM_CHAT_UPDATE',
-			data: {
-				chatLog: chatLog
-			}
-		});
 	}
 
 	actionJoinRoom(action) {
@@ -141,11 +115,11 @@ class SocketIoController {
 		const roomName = ChatRoomController.getRoomNameWithId(this.chatRooms, roomId).name;
 
 		this.socket.leave(currentRoomName, (error) => {
-			this.sendError(error, 'Error')
+			//this.sendError(error, 'Error')  <-- throwing errors on every join
 		});
 		this.socket.join(roomName);
-		const chatlog = this.getChatLogForRoom(this.chatLog, roomId);
-		this.updateChatLogsAll(roomName, this.io, chatlog);
+		const chatlog = ChatLogController.getChatLogForRoom(this.chatLog, roomId);
+		ChatLogController.updateChatLogFull(roomName, this.io, chatlog);
 	}
 
 	// Update for everyone
