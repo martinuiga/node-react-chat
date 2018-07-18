@@ -13,15 +13,6 @@ const chatRooms = [
 	}
 ];
 
-const chatRoomsInit = [
-	{
-		id: 0,
-		name: 'Default',
-		connected: false,
-		connectedUsers: []
-	}
-];
-
 const users = [
 	{
 		id: 0,
