@@ -73,6 +73,20 @@ class ChatRoomController {
 		});
 		return filteredOffline;
 	}
+
+	updateChatLog(chatRooms, message, users) {
+		const owner = _.find(users, { nickname: message.nickname });
+		const chatRoom = this.whichRoomUserIn(chatRooms, owner.id);
+		const newId = (chatRoom.chatLog.length > 0 ? _.last(chatRoom.chatLog).id + 1 : 0);
+		const newMessage = {
+			id: newId,
+			owner: owner.id,
+			message: message.message,
+			date: new Date()
+		};
+
+		chatRoom.chatLog.push(newMessage);
+	}
 }
 
 module.exports = new ChatRoomController();

@@ -10,8 +10,12 @@ const Message = (props) => {
 	const { classes } = props;
 
 	return (
-		<Grid item container
+		<Grid item container direction="column" alignItems={(props.color ? "flex-end" : "flex-start")}
 			justify={props.justify}>
+			<Typography
+				variant="caption">
+				{props.owner}
+			</Typography>
 			<Paper
 				className={[classes.messageBg, classes[props.color]].join(" ")}>
 				<Typography

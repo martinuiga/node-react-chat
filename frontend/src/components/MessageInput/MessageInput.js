@@ -17,19 +17,30 @@ class MessageInput extends Component {
 		});
 	};
 
+	handleButtonOnClick = (e) => {
+		if (this.state.input !== "") {
+			this.props.sendMessage(this.state.input, this.props.nickname)
+			this.setState({
+				input: ""
+			});
+		}
+	};
+
 	render() {
 
-		return(
+		return (
 			<form>
 				<Textfield onChange={this.handleTextFieldChange}
-						   multiline={true}
-						   placeholder="Input..."
-						   className="inputField"
-						   InputProps={{disableUnderline: true}}/>
+					value={this.state.input}
+					multiline={true}
+					placeholder="Input..."
+					className="inputField"
+					InputProps={{ disableUnderline: true }} />
 
 				<Button className="sendButton"
-						variant="contained"
-						color="primary" onClick={() => this.props.sendMessage(this.state.input, this.props.nickname)}>
+					variant="contained"
+					color="primary"
+					onClick={this.handleButtonOnClick}>
 					Send
 				</Button>
 			</form>

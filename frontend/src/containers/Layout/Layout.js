@@ -76,6 +76,8 @@ class Layout extends Component {
 						xs={9}>
 						<ChatArea
 							chatRooms={this.props.chatRooms}
+							chatLog={this.props.chatLog}
+							users={this.props.users}
 						/>
 					</Grid>
 				</Grid>
@@ -113,7 +115,9 @@ const mapStateToProps = (state) => {
 		nickInUse: state.socket.nickInUse,
 		modalOpen: state.socket.modalOpen,
 		serverError: state.socket.serverError,
-		snackOpen: state.socket.snackOpen
+		snackOpen: state.socket.snackOpen,
+		chatLog: state.socket.chatLog,
+		users: state.socket.users
 	};
 };
 

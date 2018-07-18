@@ -14,7 +14,7 @@ const util = require('./src/util/util');
 
 let socketController;
 let chatRooms = util.chatRooms;
-let chatLog;
+let chatLog = util.chatLog;
 const users = util.users;
 
 io.on('connection', (socket) => {

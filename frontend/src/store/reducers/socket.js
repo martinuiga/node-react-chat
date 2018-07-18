@@ -4,18 +4,21 @@ import {
 	NEW_NAME_REQUIRED,
 	ROOM_UPDATE,
 	SERVER_ERROR,
-	CLOSE_SNACK
+	CLOSE_SNACK,
+	UPDATE_LOG_FULL,
+	UPDATE_LOG_SINGLE
 } from "../actions/actionTypes";
-import { updateObject } from "../../shared/utility";
+import { updateObject, pushLog } from "../../shared/utility";
 
 const initialState = {
 	connection: 0,
 	modalOpen: (localStorage.getItem('nickname') ? false : true),
 	chatRooms: [],
-	chatLog: [],
 	nickInUse: false,
 	serverError: {},
-	snackOpen: false
+	snackOpen: false,
+	users: [],
+	chatLog: []
 };
 
 const setConnection = (state, action) => {
@@ -28,7 +31,7 @@ const setMessageRoomData = (state, action) => {
 	localStorage.setItem('id', action.data.id);
 	return updateObject(state, {
 		chatRooms: action.data.chatRooms,
-		chatLog: action.data.chatLog,
+		users: action.data.users,
 		modalOpen: false,
 		nickInUse: false
 	});
@@ -36,7 +39,8 @@ const setMessageRoomData = (state, action) => {
 
 const setUpdateRoom = (state, action) => {
 	return updateObject(state, {
-		chatRooms: action.data.chatRooms
+		chatRooms: action.data.chatRooms,
+		users: action.data.users
 	});
 };
 
@@ -61,6 +65,18 @@ const closeSnack = (state, action) => {
 	})
 };
 
+const updateLogFull = (state, action) => {
+	return updateObject(state, {
+		chatLog: action.data.chatLog
+	})
+}
+
+const updateLogSingle = (state, action) => {
+	return updateObject(state, {
+		chatLog: pushLog(state.chatLog, action.data.message)
+	})
+}
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case CONN_STATUS:
@@ -73,6 +89,10 @@ export default (state = initialState, action) => {
 			return newNameRequired(state, action);
 		case ROOM_UPDATE:
 			return setUpdateRoom(state, action);
+		case UPDATE_LOG_FULL:
+			return updateLogFull(state, action);
+		case UPDATE_LOG_SINGLE:
+			return updateLogSingle(state, action);
 		case SERVER_ERROR:
 			return serverError(state, action);
 		case CLOSE_SNACK:
