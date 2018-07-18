@@ -87,6 +87,23 @@ class ChatRoomController {
 
 		chatRoom.chatLog.push(newMessage);
 	}
+
+	createRoom(chatRooms, roomName) {
+		const newId = chatRooms.length;
+		const newRoom = {
+			id: newId,
+			name: roomName,
+			connectedUsers: [],
+		}
+		chatRooms.push(newRoom);
+		return newId;
+	}
+
+	deleteRoom(id, chatRooms) {
+		_.remove(chatRooms, {
+			id: id
+		});
+	}
 }
 
 module.exports = new ChatRoomController();

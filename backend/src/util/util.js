@@ -2,22 +2,13 @@ const chatLog = [
 	{
 		roomId: 0,
 		log: []
-	},
-	{
-		roomId: 1,
-		log: []
 	}
 ]
 
 const chatRooms = [
 	{
 		id: 0,
-		name: 'chat room 1',
-		connectedUsers: [],
-	},
-	{
-		id: 1,
-		name: 'chat room 2',
+		name: 'Default',
 		connectedUsers: [],
 	}
 ];
@@ -25,13 +16,7 @@ const chatRooms = [
 const chatRoomsInit = [
 	{
 		id: 0,
-		name: 'chat room 1',
-		connected: false,
-		connectedUsers: []
-	},
-	{
-		id: 1,
-		name: 'chat room 2',
+		name: 'Default',
 		connected: false,
 		connectedUsers: []
 	}

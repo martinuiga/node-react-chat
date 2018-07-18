@@ -26,6 +26,8 @@ class SocketIoController {
 					return this.actionJoinRoom(action);
 				case socketActions.RECONNECT:
 					return this.actionInitialize(action, this.socket.id);
+				case socketActions.CREATE_ROOM:
+					return this.actionCreateRoom(action);
 				default:
 					return console.log('Unknown action ', action.type);
 			}
@@ -34,9 +36,8 @@ class SocketIoController {
 		this.socket.on('disconnect', () => {
 			console.log("disconnected");
 			UserController.userDisconnected(this.users, this.socket);
+			ChatLogController.checkAndClearLogs(this.users, this.chatLog, this.chatRooms);
 			this.updateRoomsAll(this.chatRooms, this.users, this.io);
-			ChatLogController.checkAndClearLogs(this.users, this.chatLog);
-			console.log(this.chatLog);
 		});
 		this.socket.on('reconnect', () => {
 			console.log('reconnect');
@@ -88,13 +89,19 @@ class SocketIoController {
 				users: users
 			}
 		});
-		console.log(this.chatLog);
 
 		this.updateRoomsOthers(this.chatRooms, this.users, this.socket);
 		const roomName = ChatRoomController.getRoomNameWithId(this.chatRooms, 0).name;
 
 		this.socket.join(roomName);
 		ChatLogController.updateChatLogFull(roomName, this.io, ChatLogController.getChatLogForRoom(this.chatLog, 0));
+	}
+
+	actionCreateRoom(action) {
+		if (action.data.roomName === "") return this.sendError('Room name missing', 'Error');
+		const newId = ChatRoomController.createRoom(this.chatRooms, action.data.roomName);
+		ChatLogController.createNewChatLog(this.chatLog, newId);
+		this.updateRoomsAll(this.chatRooms, this.users, this.io);
 	}
 
 	actionMessage(action) {

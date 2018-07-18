@@ -1,4 +1,4 @@
-import { INITIALIZE, JOIN_GROUP, SEND_TO_SERVER_EXAMPLE, CLOSE_SNACK } from "./actionTypes";
+import { INITIALIZE, JOIN_GROUP, SEND_TO_SERVER_EXAMPLE, CLOSE_SNACK, CREATE_ROOM } from "./actionTypes";
 
 export const initialize = (nickname) => {
 	return {
@@ -37,3 +37,12 @@ export const closeSnack = () => {
 		}
 	}
 };
+
+export const createRoom = (roomName) => {
+	return {
+		type: CREATE_ROOM,
+		data: {
+			roomName
+		}
+	}
+}

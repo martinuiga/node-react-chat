@@ -8,7 +8,7 @@ import { styles } from './LayoutStyles';
 import Header from '../../components/Header/Header';
 import ChatArea from '../../components/ChatArea/ChatArea';
 import Modal from '../../components/Modal/Modal';
-import { initialize, setNickname, joinRoom, closeSnack } from "../../store/actions/index";
+import { initialize, setNickname, joinRoom, closeSnack, createRoom } from "../../store/actions/index";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import Snackbar from '../../components/Snackbar/Snackbar';
 
@@ -68,7 +68,7 @@ class Layout extends Component {
 						<SideMenu
 							chatRooms={this.props.chatRooms}
 							joinRoom={this.props.joinRoom}
-							myId={this.props.nickname}
+							createRoom={this.props.createRoom}
 						/>
 					</Grid>
 					<Grid
@@ -134,6 +134,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		closeSnack: () => {
 			dispatch(closeSnack())
+		},
+		createRoom: (roomName) => {
+			dispatch(createRoom(roomName))
 		}
 	}
 };
