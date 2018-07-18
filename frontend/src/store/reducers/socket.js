@@ -1,13 +1,4 @@
-import {
-	CONN_STATUS,
-	INITIALIZE_ROOMS,
-	NEW_NAME_REQUIRED,
-	ROOM_UPDATE,
-	SERVER_ERROR,
-	CLOSE_SNACK,
-	UPDATE_LOG_FULL,
-	UPDATE_LOG_SINGLE
-} from "../actions/actionTypes";
+import * as actionTypes from "../actions/actionTypes";
 import { updateObject, pushLog } from "../../shared/utility";
 
 const initialState = {
@@ -79,23 +70,23 @@ const updateLogSingle = (state, action) => {
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case CONN_STATUS:
+		case actionTypes.CONN_STATUS:
 			return setConnection(state, action);
-		case INITIALIZE_ROOMS:
+		case actionTypes.INITIALIZE_ROOMS:
 			console.log(action);
 			return setMessageRoomData(state, action);
-		case NEW_NAME_REQUIRED:
+		case actionTypes.NEW_NAME_REQUIRED:
 			console.log(action);
 			return newNameRequired(state, action);
-		case ROOM_UPDATE:
+		case actionTypes.ROOM_UPDATE:
 			return setUpdateRoom(state, action);
-		case UPDATE_LOG_FULL:
+		case actionTypes.UPDATE_LOG_FULL:
 			return updateLogFull(state, action);
-		case UPDATE_LOG_SINGLE:
+		case actionTypes.UPDATE_LOG_SINGLE:
 			return updateLogSingle(state, action);
-		case SERVER_ERROR:
+		case actionTypes.SERVER_ERROR:
 			return serverError(state, action);
-		case CLOSE_SNACK:
+		case actionTypes.CLOSE_SNACK:
 			return closeSnack(state, action);
 		default:
 			return state;

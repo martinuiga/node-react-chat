@@ -10,9 +10,15 @@ const Header = (props) => (
 		<Toolbar>
 			<Typography
 				variant="headline"
-				color="default">
-				{/* If there are too many users to fit in the component, then will have to wrap */}
-				{props.users.join(", ")} {props.room === "" ? "" : "in"} {props.room}
+				color="default"
+				noWrap={true}>
+				{props.users.join(", ")}
+			</Typography>
+			<Typography
+				variant="headline"
+				color="default"
+				noWrap={true}>
+				{props.room === "" ? "" : "in"} {props.room}
 			</Typography>
 		</Toolbar>
 	</AppBar>

@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import { compose } from 'redux';
 
 import { styles } from './LayoutStyles';
-import Header from '../../components/Header/Header';
+import MainHeader from '../../components/MainHeader/MainHeader';
 import ChatArea from '../../components/ChatArea/ChatArea';
 import Modal from '../../components/Modal/Modal';
-import { initialize, setNickname, joinRoom, closeSnack, createRoom } from "../../store/actions/index";
+import * as actions from "../../store/actions/index";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import Snackbar from '../../components/Snackbar/Snackbar';
 
@@ -94,7 +94,7 @@ class Layout extends Component {
 					label="Nickname"
 					errorMessage={this.props.nickInUse ? "Nickname is in use" : ""}
 					error={this.state.error || this.props.nickInUse} />
-				<Header />
+				<MainHeader />
 				<div className={classes.root}>
 					{content}
 				</div>
@@ -124,19 +124,19 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		initialize: (nickname) => {
-			dispatch(initialize(nickname))
+			dispatch(actions.initialize(nickname))
 		},
 		setNickname: (nickname) => {
-			dispatch(setNickname(nickname))
+			dispatch(actions.setNickname(nickname))
 		},
 		joinRoom: (id) => {
-			dispatch(joinRoom(id))
+			dispatch(actions.joinRoom(id))
 		},
 		closeSnack: () => {
-			dispatch(closeSnack())
+			dispatch(actions.closeSnack())
 		},
 		createRoom: (roomName) => {
-			dispatch(createRoom(roomName))
+			dispatch(actions.createRoom(roomName))
 		}
 	}
 };

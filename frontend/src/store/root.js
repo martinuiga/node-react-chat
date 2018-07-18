@@ -4,7 +4,7 @@ import createSocketIoMiddleware from 'redux-socket.io';
 
 import socketReducer from './reducers/socket';
 import userReducer from './reducers/user';
-import { CONN_STATUS, RECONNECT } from "./actions/actionTypes";
+import * as actionTypes from "./actions/actionTypes";
 
 let socket = io(process.env.REACT_APP_SOCKET_ADDR);
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
@@ -33,7 +33,7 @@ store.subscribe(() => {
 socket.on('connect', () => {
 	if (store.getState().socket.connection !== 1) {
 		store.dispatch({
-			type: CONN_STATUS,
+			type: actionTypes.CONN_STATUS,
 			status: 1
 		});
 	}
@@ -41,14 +41,14 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
 	if (store.getState().socket.connection !== 0) {
 		store.dispatch({
-			type: CONN_STATUS,
+			type: actionTypes.CONN_STATUS,
 			status: 0
 		});
 	}
 });
 socket.on('reconnect', () => {
 	store.dispatch({
-		type: RECONNECT,
+		type: actionTypes.RECONNECT,
 		data: {
 			nickname: localStorage.getItem('nickname'),
 			id: localStorage.getItem('id')

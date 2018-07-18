@@ -4,6 +4,10 @@ import Layout from './containers/Layout/Layout';
 import './App.css';
 
 class App extends Component {
+	componentWillMount() {
+		document.title = 'WebChat'
+	}
+
 	render() {
 		return (
 			<Layout />

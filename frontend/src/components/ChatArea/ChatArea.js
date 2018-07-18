@@ -8,7 +8,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Messages from './Messages/Messages';
 import styles from './ChatAreaStyles';
-import MessageInput from '../MessageInput/MessageInput';
+import MessageInput from '../../containers/MessageInput/MessageInput';
 
 const ChatArea = (props) => {
 	const { classes } = props;
