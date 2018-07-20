@@ -98,7 +98,7 @@ class SocketIoController {
 	}
 
 	actionCreateRoom(action) {
-		if (action.data.roomName === "") return this.sendError('Room name missing', 'Error');
+		if (!action.data.roomName) return this.sendError('Room name missing', 'Error');
 		const newId = ChatRoomController.createRoom(this.chatRooms, action.data.roomName);
 		ChatLogController.createNewChatLog(this.chatLog, newId);
 		this.updateRoomsAll(this.chatRooms, this.users, this.io);

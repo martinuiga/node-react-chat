@@ -10,7 +10,7 @@ class ChatLogController {
 		const newLog = {
 			roomId: newId,
 			log: []
-		}
+		};
 		chatLog.push(newLog);
 	}
 
@@ -63,17 +63,17 @@ class ChatLogController {
 					canDelete = false;
 					return false;
 				}
-			})
+			});
 			const currentRoom = _.find(chatRooms, { id: roomLog.roomId });
 
 			if (canDelete) {
 				roomLog.log.length = 0;
-				if (roomLog.roomId !== 0 && currentRoom.connectedUsers.length === 0) {
+				if (roomLog.roomId && !currentRoom.connectedUsers.length) {
 					this.deleteLog(roomLog.roomId, chatLog);
 					ChatRoomController.deleteRoom(roomLog.roomId, chatRooms)
 				}
 			}
-		})
+		});
 	}
 
 	deleteLog(id, chatLog) {

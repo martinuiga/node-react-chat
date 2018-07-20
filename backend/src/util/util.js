@@ -30,7 +30,6 @@ const users = [
 
 module.exports = {
 	chatRooms,
-	chatRoomsInit,
 	chatLog,
 	users
 };

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import Textfield from '@material-ui/core/TextField';
 import { connect } from "react-redux";
@@ -26,16 +26,22 @@ class MessageInput extends Component {
 		}
 	};
 
-	render() {
+	handleKeyPress = (e) => {
+		if (e.keyCode === 13) {
+			this.handleButtonOnClick();
+		}
+	};
 
+	render() {
 		return (
-			<form>
+			<Fragment>
 				<Textfield onChange={this.handleTextFieldChange}
 					value={this.state.input}
-					multiline={true}
 					placeholder="Input..."
 					className="inputField"
-					InputProps={{ disableUnderline: true }} />
+					InputProps={{ disableUnderline: true }}
+					onKeyDown={this.handleKeyPress}
+					multiline={false}/>
 
 				<Button className="sendButton"
 					variant="contained"
@@ -43,7 +49,7 @@ class MessageInput extends Component {
 					onClick={this.handleButtonOnClick}>
 					Send
 				</Button>
-			</form>
+			</Fragment>
 		);
 	}
 }

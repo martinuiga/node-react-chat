@@ -14,6 +14,7 @@ const Header = (props) => (
 				noWrap={true}>
 				{props.users.join(", ")}
 			</Typography>
+			&nbsp;
 			<Typography
 				variant="headline"
 				color="default"
