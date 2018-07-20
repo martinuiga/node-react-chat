@@ -2,7 +2,8 @@ export {
 	initialize,
 	sendResponse,
 	joinRoom,
-	closeSnack
+	closeSnack,
+	createRoom
 } from './socket';
 
 export {

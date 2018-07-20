@@ -1,8 +1,8 @@
-import { SEND_MESSAGE } from "./actionTypes";
+import * as actionTypes from "./actionTypes";
 
 export const sendMessage = (message, nickname) => {
 	return {
-		type: SEND_MESSAGE,
+		type: actionTypes.SEND_MESSAGE,
 		data: {
 			message, nickname
 		}

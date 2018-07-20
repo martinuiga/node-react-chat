@@ -2,38 +2,14 @@ const chatLog = [
 	{
 		roomId: 0,
 		log: []
-	},
-	{
-		roomId: 1,
-		log: []
 	}
 ]
 
 const chatRooms = [
 	{
 		id: 0,
-		name: 'chat room 1',
+		name: 'Default',
 		connectedUsers: [],
-	},
-	{
-		id: 1,
-		name: 'chat room 2',
-		connectedUsers: [],
-	}
-];
-
-const chatRoomsInit = [
-	{
-		id: 0,
-		name: 'chat room 1',
-		connected: false,
-		connectedUsers: []
-	},
-	{
-		id: 1,
-		name: 'chat room 2',
-		connected: false,
-		connectedUsers: []
 	}
 ];
 
@@ -54,7 +30,6 @@ const users = [
 
 module.exports = {
 	chatRooms,
-	chatRoomsInit,
 	chatLog,
 	users
 };

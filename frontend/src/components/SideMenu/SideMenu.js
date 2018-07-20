@@ -15,6 +15,7 @@ const SideMenu = (props) => {
 		<RoomsList
 			chatRooms={chatRooms}
 			joinRoom={props.joinRoom}
+			createRoom={props.createRoom}
 		/>;
 
 	return (

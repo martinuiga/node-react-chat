@@ -16,9 +16,16 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import styles from './RoomsListStyles';
 import { withStyles } from "@material-ui/core/styles/index";
+import Modal from '../../Modal/Modal';
 
 class RoomsList extends Component {
-	state = { open: {} };
+	state = {
+		open: {},
+		modalOpen: false,
+		newRoomName: "",
+		error: false
+	};
+
 	myId = parseInt(localStorage.getItem('id'), 10);
 
 	constructor(props) {
@@ -88,9 +95,51 @@ class RoomsList extends Component {
 
 	}
 
+	handleCreateRoom = () => {
+		this.setState({ modalOpen: true })
+	}
+
+	handleModalSubmit = () => {
+		if (this.state.newRoomName !== "") {
+			this.props.createRoom(this.state.newRoomName);
+			this.setState({
+				newRoomName: "",
+				modalOpen: false
+			});
+		} else {
+			this.setState({error: true});
+		}
+
+	}
+
+	handleModalInputChange = (event) => {
+		this.setState({ newRoomName: event.target.value });
+	};
+
+	handleModalClose = () => {
+		this.setState({
+			newRoomName: "",
+			modalOpen: false
+		});
+	};
+
 	render() {
 		const { chatRooms } = this.props;
 		let chatRoomListItems = [];
+
+		const roomModal = (
+			<Fragment>
+				<Modal
+					open={this.state.modalOpen}
+					close={this.handleModalClose}
+					submit={this.handleModalSubmit}
+					change={this.handleModalInputChange}
+					text="Enter New Room Name"
+					label="Room Name"
+					errorMessage=""
+					error={this.state.error} />
+			</Fragment>
+		);
 
 		_.forEach(chatRooms, (chatRoom) => {
 			let subList;
@@ -136,12 +185,23 @@ class RoomsList extends Component {
 			);
 		});
 		return (
-			<List
-				component="nav"
-				subheader={<ListSubheader component="div">Chat Rooms</ListSubheader>}
-			>
-				{chatRoomListItems}
-			</List>
+			<Fragment>
+				<List
+					component="nav"
+					subheader={<ListSubheader component="div">Chat Rooms</ListSubheader>}
+				>
+					{chatRoomListItems}
+					<ListItem button key="cr" onClick={() => {
+						this.handleCreateRoom();
+					}}>
+						<ListItemIcon>
+							<PlusIcon />
+						</ListItemIcon>
+						<ListItemText inset primary="Create Room" />
+					</ListItem>
+				</List>
+				{roomModal}
+			</Fragment>
 		);
 	}
 }

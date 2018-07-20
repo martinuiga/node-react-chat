@@ -1,8 +1,8 @@
-import { SET_NICKNAME } from "./actionTypes";
+import * as actionTypes from "./actionTypes";
 
 export const setNickname = (nickname) => {
     return {
-        type: SET_NICKNAME,
+		type: actionTypes.SET_NICKNAME,
         data: {
             nickname
         }

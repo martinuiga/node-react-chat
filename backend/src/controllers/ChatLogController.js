@@ -6,6 +6,14 @@ class ChatLogController {
 		return (_.find(chatLog, { roomId: roomId })).log;
 	}
 
+	createNewChatLog(chatLog, newId) {
+		const newLog = {
+			roomId: newId,
+			log: []
+		};
+		chatLog.push(newLog);
+	}
+
 	updateChatLog(chatRooms, users, io, nickname, chatLog, message) {
 		const user = _.find(users, { nickname: nickname });
 		const room = ChatRoomController.whichRoomUserIn(chatRooms, user.id);
@@ -46,7 +54,7 @@ class ChatLogController {
 		arr.push(elem);
 	}
 
-	checkAndClearLogs(users, chatLog) {
+	checkAndClearLogs(users, chatLog, chatRooms) {
 		_.forEach(chatLog, roomLog => {
 			let canDelete = true;
 			_.forEach(roomLog.log, message => {
@@ -55,9 +63,23 @@ class ChatLogController {
 					canDelete = false;
 					return false;
 				}
-			})
-			if (canDelete) roomLog.log.length = 0;
-		})
+			});
+			const currentRoom = _.find(chatRooms, { id: roomLog.roomId });
+
+			if (canDelete) {
+				roomLog.log.length = 0;
+				if (roomLog.roomId && !currentRoom.connectedUsers.length) {
+					this.deleteLog(roomLog.roomId, chatLog);
+					ChatRoomController.deleteRoom(roomLog.roomId, chatRooms)
+				}
+			}
+		});
+	}
+
+	deleteLog(id, chatLog) {
+		_.remove(chatLog, {
+			roomId: id
+		});
 	}
 }
 
