@@ -1,10 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Textfield from '@material-ui/core/TextField';
 import { connect } from "react-redux";
-import { sendMessage } from "../../store/actions/chat";
+import {isTyping, sendMessage} from "../../store/actions/chat";
+import { withStyles } from '@material-ui/core/styles';
+import styles from './MessageInputStyles';
+import { compose } from 'redux';
 
-import './MessageInput.css';
 
 class MessageInput extends Component {
 	state = {
@@ -15,60 +17,64 @@ class MessageInput extends Component {
 		this.setState({
 			input: e.target.value
 		});
-	};
 
-	handleButtonOnClick = (e) => {
-		if (this.state.input !== "") {
-			this.props.sendMessage(this.state.input, this.props.nickname)
-			this.setState({
-				input: ""
-			});
+		if(e.target.value) {
+			this.props.isTyping(this.props.nickname, this.props.id, true);
+		} else {
+			this.props.isTyping(this.props.nickname, this.props.id, false);
 		}
 	};
 
-	handleKeyPress = (e) => {
-		if (e.keyCode === 13) {
-			this.handleButtonOnClick();
-		}
+	handleOnClick = (message, nickname, userId) => {
+		this.props.sendMessage(message, nickname, userId);
+		this.setState({
+			input: ""
+		});
+		this.props.isTyping(this.props.nickname, this.props.id, false);
 	};
 
 	render() {
-		return (
-			<Fragment>
+		const { classes } = this.props;
+		return(
+			<form>
 				<Textfield onChange={this.handleTextFieldChange}
-					value={this.state.input}
-					placeholder="Input..."
-					className="inputField"
-					InputProps={{ disableUnderline: true }}
-					onKeyDown={this.handleKeyPress}
-					multiline={false}/>
+						   multiline={true}
+						   placeholder="Input..."
+						   value={this.state.input}
+						   className={classes.inputField}
+						   InputProps={{disableUnderline: true}}/>
 
-				<Button className="sendButton"
-					variant="contained"
-					color="primary"
-					onClick={this.handleButtonOnClick}>
+				<Button className={classes.sendButton}
+						variant="contained"
+						color="primary" onClick={() => this.handleOnClick(this.state.input, this.props.nickname, this.props.id)}>
 					Send
 				</Button>
-			</Fragment>
+			</form>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		nickname: state.user.nickname
+		nickname: state.user.nickname,
+		id: state.user.userId,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		sendMessage: (message, nickname) => {
-			dispatch(sendMessage(message, nickname))
+		sendMessage: (message, nickname, id) => {
+			dispatch(sendMessage(message, nickname, id))
+		},
+		isTyping: (nickname, id, typing) => {
+			dispatch(isTyping(nickname, id, typing))
 		}
 	}
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(MessageInput);
+export default compose(
+	withStyles(styles),
+	connect(
+		mapStateToProps,
+		mapDispatchToProps
+	))(MessageInput);

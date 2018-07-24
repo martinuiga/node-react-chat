@@ -78,6 +78,7 @@ class Layout extends Component {
 							chatRooms={this.props.chatRooms}
 							chatLog={this.props.chatLog}
 							users={this.props.users}
+							typers={this.props.typers}
 						/>
 					</Grid>
 				</Grid>
@@ -117,7 +118,8 @@ const mapStateToProps = (state) => {
 		serverError: state.socket.serverError,
 		snackOpen: state.socket.snackOpen,
 		chatLog: state.socket.chatLog,
-		users: state.socket.users
+		users: state.socket.users,
+		typers: state.socket.typers
 	};
 };
 

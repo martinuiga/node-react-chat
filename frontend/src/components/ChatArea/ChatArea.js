@@ -14,9 +14,11 @@ const ChatArea = (props) => {
 	const { classes } = props;
 	const { chatRooms } = props;
 	const { chatLog } = props;
+	const { typers } = props;
 	const usersObj = props.users;
 	let users = [];
 	let room = "";
+	let typingUsers = [];
 	const myId = parseInt(localStorage.getItem('id'), 10);
 
 	_.forEach(chatRooms, chatRoom => {
@@ -28,6 +30,12 @@ const ChatArea = (props) => {
 	// Can do this better
 	_.forEach(room.connectedUsers, user => {
 		users.push(user.nickname);
+
+		_.forEach(typers, typer => {
+			if (typer.typingId === user.id && typer.typing) {
+				typingUsers.push(user.nickname);
+			}
+		});
 	});
 
 	if (room.name === "") users = [];
@@ -62,7 +70,7 @@ const ChatArea = (props) => {
 							users={usersObj} />
 						<Footer
 							//Users that are typing go here
-							users={users} />
+							users={typingUsers} />
 					</Grid>
 				</Paper>
 			</Grid>
