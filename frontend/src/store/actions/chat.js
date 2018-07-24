@@ -1,10 +1,19 @@
-import * as actionTypes from "./actionTypes";
+import {SEND_MESSAGE, TYPING} from "./actionTypes";
 
-export const sendMessage = (message, nickname) => {
+export const sendMessage = (message, nickname, userId) => {
 	return {
-		type: actionTypes.SEND_MESSAGE,
+		type: SEND_MESSAGE,
 		data: {
-			message, nickname
+			message, nickname, userId
+		}
+	}
+};
+
+export const isTyping = (nickname, userId, typing) => {
+	return {
+		type: TYPING,
+		data: {
+			nickname, userId, typing
 		}
 	}
 };

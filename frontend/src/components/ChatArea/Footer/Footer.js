@@ -5,9 +5,11 @@ import Grid from '@material-ui/core/Grid';
 const Footer = (props) => {
 	let text = "";
 	if (props.users.length > 1) {
-		text = "are typing";
+		text = 'are typing';
 	} else if (props.users.length === 1 ){
 		text = "is typing";
+	} else {
+		text = ""
 	}
 	return (
 		<Grid item>

@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject, pushLog } from "../../shared/utility";
+import { updateObject, pushLog, pushTyper } from "../../shared/utility";
 
 const initialState = {
 	connection: 0,
@@ -9,7 +9,8 @@ const initialState = {
 	serverError: {},
 	snackOpen: false,
 	users: [],
-	chatLog: []
+	chatLog: [],
+	typers: []
 };
 
 const setConnection = (state, action) => {
@@ -66,7 +67,14 @@ const updateLogSingle = (state, action) => {
 	return updateObject(state, {
 		chatLog: pushLog(state.chatLog, action.data.message)
 	})
-}
+};
+
+const updateUsers = (state, action) => {
+	console.log(action.data.typingStatus);
+	return updateObject(state, {
+		typers: pushTyper(state.typers, action.data.typingStatus)
+	});
+};
 
 export default (state = initialState, action) => {
 	switch (action.type) {
@@ -78,6 +86,8 @@ export default (state = initialState, action) => {
 		case actionTypes.NEW_NAME_REQUIRED:
 			console.log(action);
 			return newNameRequired(state, action);
+		case actionTypes.USERS_UPDATE:
+			return updateUsers(state, action);
 		case actionTypes.ROOM_UPDATE:
 			return setUpdateRoom(state, action);
 		case actionTypes.UPDATE_LOG_FULL:

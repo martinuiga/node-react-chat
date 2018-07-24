@@ -28,6 +28,8 @@ class SocketIoController {
 					return this.actionInitialize(action, this.socket.id);
 				case socketActions.CREATE_ROOM:
 					return this.actionCreateRoom(action);
+				case socketActions.TYPING:
+					return this.actionTyping(action);
 				default:
 					return console.log('Unknown action ', action.type);
 			}
@@ -108,6 +110,18 @@ class SocketIoController {
 		if (action.data.message === "") return this.sendError('Message missing', 'Error');
 		ChatLogController.updateChatLog(this.chatRooms, this.users, this.io,
 			action.data.nickname, this.chatLog, action.data.message);
+	}
+
+	actionTyping(action) {
+		this.socket.broadcast.emit('action', {
+			type: 'USERS_UPDATE',
+			data: {
+				typingStatus: {
+					typingId: action.data.userId,
+					typing: action.data.typing
+				}
+			}
+		});
 	}
 
 	actionJoinRoom(action) {
