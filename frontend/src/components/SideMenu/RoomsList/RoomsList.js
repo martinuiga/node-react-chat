@@ -65,7 +65,7 @@ class RoomsList extends Component {
 					<ListItemIcon>
 						{user.id === this.myId ? <PersonIcon /> : <PersonOutlineIcon />}
 					</ListItemIcon>
-					<ListItemText inset primary={user.nickname} />
+					<ListItemText inset primary={user.nickname} primaryTypographyProps={{ noWrap: true }}/>
 				</ListItem>
 			);
 		});
@@ -177,7 +177,7 @@ class RoomsList extends Component {
 						<ListItemIcon>
 							{connectedToRoom ? <ChatConnectedIcon /> : <ChatNotConnectedIcon />}
 						</ListItemIcon>
-						<ListItemText inset primary={chatRoom.name} />
+						<ListItemText inset primary={chatRoom.name} primaryTypographyProps={{ noWrap: true }}/>
 						{hasUsers ? expandArrow : null}
 					</ListItem>
 					{subList}
@@ -197,7 +197,7 @@ class RoomsList extends Component {
 						<ListItemIcon>
 							<PlusIcon />
 						</ListItemIcon>
-						<ListItemText inset primary="Create Room" />
+						<ListItemText inset primary="Create Room" primaryTypographyProps={{ noWrap: true }}/>
 					</ListItem>
 				</List>
 				{roomModal}
