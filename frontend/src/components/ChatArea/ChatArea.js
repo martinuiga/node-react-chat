@@ -68,14 +68,19 @@ const ChatArea = (props) => {
 							chatLog={chatLog}
 							owner={myId}
 							users={usersObj} />
-						<Footer
-							//Users that are typing go here
-							users={typingUsers} />
 					</Grid>
 				</Paper>
 			</Grid>
 			<Grid item
-				xs={'auto'}>
+				  className={classes.typingArea}
+				  xs={'auto'}>
+					<Footer
+						//Users that are typing go here
+						users={typingUsers} />
+			</Grid>
+			<Grid item
+				  className={classes.messageInputArea}
+				  xs={'auto'}>
 				<Paper className={classes.paper}>
 					<MessageInput />
 				</Paper>

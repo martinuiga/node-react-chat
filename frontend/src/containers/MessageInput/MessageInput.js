@@ -42,7 +42,8 @@ class MessageInput extends Component {
 						   placeholder="Input..."
 						   value={this.state.input}
 						   className={classes.inputField}
-						   InputProps={{disableUnderline: true}}/>
+						   InputProps={{disableUnderline: true}}
+				/>
 
 				<Button className={classes.sendButton}
 						variant="contained"
