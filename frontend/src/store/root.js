@@ -14,11 +14,11 @@ const rootReducer = combineReducers({
 	user: userReducer
 });
 
-const reduxDevTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : null;
+// const reduxDevTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : null;
 
 const store = createStore(
 	rootReducer,
-	reduxDevTools,
+	// reduxDevTools,
 	applyMiddleware(socketIoMiddleware)
 );
 
@@ -26,22 +26,22 @@ const store = createStore(
 // store.dispatch({
 // 	type: 'server/initialize',
 // });
-socket.on('connect', () => {
-	if (store.getState().socket.connection !== 1) {
-		store.dispatch({
-			type: actionTypes.CONN_STATUS,
-			status: 1
-		});
-	}
-});
-socket.on('disconnect', () => {
-	if (store.getState().socket.connection !== 0) {
-		store.dispatch({
-			type: actionTypes.CONN_STATUS,
-			status: 0
-		});
-	}
-});
+// socket.on('connect', () => {
+// 	if (store.getState().socket.connection !== 1) {
+// 		store.dispatch({
+// 			type: actionTypes.CONN_STATUS,
+// 			status: 1
+// 		});
+// 	}
+// });
+// socket.on('disconnect', () => {
+// 	if (store.getState().socket.connection !== 0) {
+// 		store.dispatch({
+// 			type: actionTypes.CONN_STATUS,
+// 			status: 0
+// 		});
+// 	}
+// });
 socket.on('reconnect', () => {
 	store.dispatch({
 		type: actionTypes.RECONNECT,
