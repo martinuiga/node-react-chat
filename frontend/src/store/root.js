@@ -22,26 +22,26 @@ const store = createStore(
 	applyMiddleware(socketIoMiddleware)
 );
 
-// Initialize should fetch all starting data including menu, settings etc
-// store.dispatch({
-// 	type: 'server/initialize',
-// });
-// socket.on('connect', () => {
-// 	if (store.getState().socket.connection !== 1) {
-// 		store.dispatch({
-// 			type: actionTypes.CONN_STATUS,
-// 			status: 1
-// 		});
-// 	}
-// });
-// socket.on('disconnect', () => {
-// 	if (store.getState().socket.connection !== 0) {
-// 		store.dispatch({
-// 			type: actionTypes.CONN_STATUS,
-// 			status: 0
-// 		});
-// 	}
-// });
+//Initialize should fetch all starting data including menu, settings etc
+store.dispatch({
+	type: 'server/initialize',
+});
+socket.on('connect', () => {
+	if (store.getState().socket.connection !== 1) {
+		store.dispatch({
+			type: actionTypes.CONN_STATUS,
+			status: 1
+		});
+	}
+});
+socket.on('disconnect', () => {
+	if (store.getState().socket.connection !== 0) {
+		store.dispatch({
+			type: actionTypes.CONN_STATUS,
+			status: 0
+		});
+	}
+});
 socket.on('reconnect', () => {
 	store.dispatch({
 		type: actionTypes.RECONNECT,
