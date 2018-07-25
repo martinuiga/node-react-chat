@@ -89,7 +89,7 @@ class RoomsList extends Component {
 				<ListItemIcon>
 					<PlusIcon />
 				</ListItemIcon>
-				<ListItemText inset primary="Join Room" />
+				<ListItemText inset primary="Join Room" primaryTypographyProps={{ noWrap: true }}/>
 			</ListItem>
 		);
 
