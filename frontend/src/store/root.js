@@ -14,18 +14,18 @@ const rootReducer = combineReducers({
 	user: userReducer
 });
 
-const reduxDevTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : null;
+// const reduxDevTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : null;
 
 const store = createStore(
 	rootReducer,
-	reduxDevTools,
+	// reduxDevTools,
 	applyMiddleware(socketIoMiddleware)
 );
 
-// Initialize should fetch all starting data including menu, settings etc
-// store.dispatch({
-// 	type: 'server/initialize',
-// });
+//Initialize should fetch all starting data including menu, settings etc
+store.dispatch({
+	type: 'server/initialize',
+});
 socket.on('connect', () => {
 	if (store.getState().socket.connection !== 1) {
 		store.dispatch({
