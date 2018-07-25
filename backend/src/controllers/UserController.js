@@ -23,7 +23,6 @@ class UserController {
 			if (user.id !== socket.id) return;
 			user.socketId = socket.id;
 			user.connected = true;
-			console.log('user reconnect');
 			found = true;
 			return false;
 		});

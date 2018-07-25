@@ -40,8 +40,6 @@ const ChatArea = (props) => {
 
 	if (room.name === "") users = [];
 
-	console.log(users.join(", "));
-
 	return (
 		<Grid container
 			className={classes.test}

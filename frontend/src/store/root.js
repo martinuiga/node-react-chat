@@ -22,10 +22,6 @@ const store = createStore(
 	applyMiddleware(socketIoMiddleware)
 );
 
-// listens to stuff sent from server
-store.subscribe(() => {
-	console.log('new client state', store.getState());
-});
 // Initialize should fetch all starting data including menu, settings etc
 // store.dispatch({
 // 	type: 'server/initialize',

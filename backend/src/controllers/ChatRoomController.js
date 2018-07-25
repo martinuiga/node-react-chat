@@ -66,7 +66,6 @@ class ChatRoomController {
 		let filteredOffline = chatRooms;
 		_.forEach(filteredOffline, (chatRoom) => {
 			chatRoom.connectedUsers.forEach(user => {
-				console.log(user);
 				if (user.connected) return;
 				_.remove(chatRoom.connectedUsers, user);
 			});

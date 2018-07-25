@@ -19,7 +19,6 @@ export const sendResponse = (message) => {
 };
 
 export const joinRoom = (id) => {
-	console.log('join room');
 	return {
 		type: actionTypes.JOIN_GROUP,
 		data: {

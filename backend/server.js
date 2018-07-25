@@ -18,7 +18,6 @@ let chatLog = util.chatLog;
 const users = util.users;
 
 io.on('connection', (socket) => {
-	// console.log(io.sockets.sockets);
 	socketController = new SocketIoController(socket, io, chatRooms, chatLog, users);
 	socketController.handleEvents();
 });

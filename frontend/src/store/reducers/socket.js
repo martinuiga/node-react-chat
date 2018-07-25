@@ -70,7 +70,6 @@ const updateLogSingle = (state, action) => {
 };
 
 const updateUsers = (state, action) => {
-	console.log(action.data.typingStatus);
 	return updateObject(state, {
 		typers: pushTyper(state.typers, action.data.typingStatus)
 	});
@@ -81,10 +80,8 @@ export default (state = initialState, action) => {
 		case actionTypes.CONN_STATUS:
 			return setConnection(state, action);
 		case actionTypes.INITIALIZE_ROOMS:
-			console.log(action);
 			return setMessageRoomData(state, action);
 		case actionTypes.NEW_NAME_REQUIRED:
-			console.log(action);
 			return newNameRequired(state, action);
 		case actionTypes.USERS_UPDATE:
 			return updateUsers(state, action);
