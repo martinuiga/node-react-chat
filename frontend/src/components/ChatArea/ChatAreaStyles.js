@@ -5,11 +5,14 @@ const styles = theme => ({
 		paddingBottom: theme.spacing.unit,
 	},
 	messageArea: {
-		height: '79vh',
+		height: '74vh',
 		overflowY: 'scroll',
 	},
-	test: {
-		//height: '100%'
+	typingArea: {
+		height: 15
+	},
+	messageInputArea: {
+		marginTop: 15
 	}
 });
 
