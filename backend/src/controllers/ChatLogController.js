@@ -55,7 +55,7 @@ class ChatLogController {
 	}
 
 	checkAndClearLogs(users, chatLog, chatRooms) {
-		_.forEach(chatLog, roomLog => {
+		chatLog.forEach(roomLog => {
 			let canDelete = true;
 			_.forEach(roomLog.log, message => {
 				const activeUser = _.find(users, { id: message.owner });
