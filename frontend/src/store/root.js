@@ -1,9 +1,9 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import io from 'socket.io-client';
-import createSocketIoMiddleware from 'redux-socket.io';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import io from "socket.io-client";
+import createSocketIoMiddleware from "redux-socket.io";
 
-import socketReducer from './reducers/socket';
-import userReducer from './reducers/user';
+import socketReducer from "./reducers/socket";
+import userReducer from "./reducers/user";
 import * as actionTypes from "./actions/actionTypes";
 
 let socket = io(process.env.REACT_APP_SOCKET_ADDR);
@@ -22,11 +22,7 @@ const store = createStore(
 	applyMiddleware(socketIoMiddleware)
 );
 
-//Initialize should fetch all starting data including menu, settings etc
-store.dispatch({
-	type: 'server/initialize',
-});
-socket.on('connect', () => {
+socket.on("connect", () => {
 	if (store.getState().socket.connection !== 1) {
 		store.dispatch({
 			type: actionTypes.CONN_STATUS,
@@ -34,7 +30,7 @@ socket.on('connect', () => {
 		});
 	}
 });
-socket.on('disconnect', () => {
+socket.on("disconnect", () => {
 	if (store.getState().socket.connection !== 0) {
 		store.dispatch({
 			type: actionTypes.CONN_STATUS,
@@ -42,14 +38,14 @@ socket.on('disconnect', () => {
 		});
 	}
 });
-socket.on('reconnect', () => {
+socket.on("reconnect", () => {
 	store.dispatch({
 		type: actionTypes.RECONNECT,
 		data: {
-			nickname: localStorage.getItem('nickname'),
-			id: localStorage.getItem('id')
+			nickname: localStorage.getItem("nickname"),
+			id: localStorage.getItem("id")
 		}
-	})
+	});
 });
 
 export default store;
