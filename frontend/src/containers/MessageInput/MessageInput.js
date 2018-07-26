@@ -13,11 +13,16 @@ class MessageInput extends Component {
 		input: ""
 	};
 
-	handleTextFieldChange = (e) => {
+	handleTextFieldChange = (e, submitObj) => {
+		console.log(e);
+		console.log(submitObj);
 		this.setState({
 			input: e.target.value
 		});
-
+		// TODO make this work
+		if (e.keyCode === 13) {
+			this.handleOnClick(submitObj.input, submitObj.nickname, submitObj.id);
+		}
 		if(e.target.value) {
 			this.props.isTyping(this.props.nickname, this.props.id, true);
 		} else {
@@ -37,7 +42,11 @@ class MessageInput extends Component {
 		const { classes } = this.props;
 		return(
 			<form>
-				<Textfield onChange={this.handleTextFieldChange}
+				<Textfield onChange={(e) => this.handleTextFieldChange(e, { // variable 'e' is not sent correctly
+					input: this.state.input,
+					nickname: this.props.nickname,
+					id: this.props.id
+				})}
 						   multiline={true}
 						   placeholder="Input..."
 						   value={this.state.input}
